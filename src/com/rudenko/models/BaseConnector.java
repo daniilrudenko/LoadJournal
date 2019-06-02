@@ -11,37 +11,23 @@ public class BaseConnector {
     private static BaseConnector instance;          // Объект Singleton
     private Connection connection;
     //----------------------------------------------
-    private  String url;
-    private  String port;
-    private  String userName;
-    private  String password;
+    private UserAuthorizationData   user;
+    private ServerAuthorizationData server;
     //----------------------------------------------
     private boolean wasDriverInitialized;
     //----------------------------------------------
-
-    // Геттеры
-    public String getUrl() {
-        return url;
-    }
-
-    public String getPort() { return port; }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
+    private final String JDBC_PROTOCOL = "jdbc:postgresql://";
+    private final String DRIVER_NAME   = "org.postgresql.Driver";
     //----------------------------------------------
-
     // Загрузка драйвера
 
     private boolean initialize(){
 
         if(!wasDriverInitialized){
+
+
             try {
-                Class.forName("org.postgresql.Driver");
+                Class.forName(DRIVER_NAME);
                 System.out.println("Драйвер \"org.postgresql.Driver\" загружен ");
                 wasDriverInitialized = true;
 
@@ -53,12 +39,12 @@ public class BaseConnector {
         }
         return wasDriverInitialized;
     }
+    //----------------------------------------------
 
     private BaseConnector() {
-        // Приватный конструктор для реализации Singleton
+        server = new ServerAuthorizationData(JDBC_PROTOCOL,":");
+        user   = new UserAuthorizationData();
     }
-
-
     //----------------------------------------------
 
     public boolean createConnection(String url, String port, String userName, String password){
@@ -66,26 +52,25 @@ public class BaseConnector {
         boolean result = false;
 
         if(initialize()) {
-
-            this.url  = "jdbc:postgresql://";
-            this.port = ":";
-
-
-            this.url  += url;
-            this.port += port;
-            this.userName = userName;
-            this.password = password;
-
-
-            this.port += "/";
-            this.url += this.port;
-
-
+            //----------------------------------
+            server.setUrl(JDBC_PROTOCOL);
+            server.setPort(":");
+            //----------------------------------
+            server.setUrl(server.getUrl().concat(url));
+            server.setPort(server.getPort().concat(port));
+            //----------------------------------
+            user.setUserName(userName);
+            user.setPassword(password);
+            //----------------------------------
+            server.setPort(server.getPort().concat("/"));
+            server.setUrl(server.getUrl().concat(server.getPort()));
+            //--------------------------------------------------------
             closeConnection();
 
+            //----------------------------------
             try {
 
-                this.connection = DriverManager.getConnection(this.url, this.userName,this.password);
+                this.connection = DriverManager.getConnection(server.getUrl(), user.getUserName(),user.getPassword());
                 System.out.println("Успешное соеденение с сервером ");
                 result = true;
 
