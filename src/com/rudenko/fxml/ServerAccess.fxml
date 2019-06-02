@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import com.rudenko.views.LimitedTextField?>
+<?import com.rudenko.views.SpacesBannedTextField?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="357.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.ServerAccessController">
    <children>
       <HBox prefHeight="55.0" prefWidth="200.0">
@@ -18,11 +19,11 @@
                   <Insets left="27.0" top="25.0" />
                </HBox.margin>
             </Label>
-            <LimitedTextField fx:id="textField_URL" focusTraversable="false"  prefHeight="27.0" prefWidth="269.0"  promptText="IP">
+            <SpacesBannedTextField fx:id="textField_URL" focusTraversable="false"  prefHeight="27.0" prefWidth="269.0"  promptText="IP">
                <HBox.margin>
                   <Insets left="100.0" top="21.0" />
                </HBox.margin>
-            </LimitedTextField>
+            </SpacesBannedTextField>
          </children>
       </HBox>
       <HBox prefHeight="55.0" prefWidth="200.0">
@@ -32,11 +33,11 @@
                   <Insets left="27.0" top="25.0" />
                </HBox.margin>
             </Label>
-            <LimitedTextField fx:id="textField_Port" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="8080">
+            <SpacesBannedTextField fx:id="textField_Port" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="8080">
                <HBox.margin>
                   <Insets left="93.0" top="21.0" />
                </HBox.margin>
-            </LimitedTextField>
+            </SpacesBannedTextField>
          </children>
       </HBox>
       <HBox prefHeight="55.0" prefWidth="200.0">
@@ -46,11 +47,11 @@
                   <Insets left="27.0" top="25.0" />
                </HBox.margin>
             </Label>
-            <LimitedTextField fx:id="textField_User" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="postgres">
+            <SpacesBannedTextField fx:id="textField_User" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="postgres">
                <HBox.margin>
                   <Insets left="36.0" top="21.0" />
                </HBox.margin>
-            </LimitedTextField>
+            </SpacesBannedTextField>
          </children>
       </HBox>
       <HBox prefHeight="55.0" prefWidth="200.0">
@@ -60,11 +61,11 @@
                   <Insets left="27.0" top="25.0" />
                </HBox.margin>
             </Label>
-            <LimitedTextField fx:id="textField_Password" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="root">
+            <SpacesBannedTextField fx:id="textField_Password" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="root">
                <HBox.margin>
                   <Insets left="77.0" top="21.0" />
                </HBox.margin>
-            </LimitedTextField>
+            </SpacesBannedTextField>
          </children>
       </HBox>
       <HBox prefHeight="55.0" prefWidth="200.0">

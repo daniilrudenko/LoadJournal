@@ -2,29 +2,29 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.BaseConnector;
 import com.rudenko.models.ControlOpportunitiesImprover;
-import com.rudenko.views.LimitedTextField;
 import com.rudenko.views.MessageDialogMaker;
+import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
-
+import javafx.stage.WindowEvent;
 
 
 public class ServerAccessController  {
 
     @FXML
-    private LimitedTextField textField_URL;        // Поле ввода URL
+    private SpacesBannedTextField textField_URL;        // Поле ввода URL
 
     @FXML
-    private LimitedTextField textField_Port;       // Поле ввода значения порта
+    private SpacesBannedTextField textField_Port;       // Поле ввода значения порта
 
     @FXML
-    private LimitedTextField textField_User;       // Поле ввода пользователя бд
+    private SpacesBannedTextField textField_User;       // Поле ввода пользователя бд
 
     @FXML
-    private LimitedTextField textField_Password;   // Поле ввода пароля
+    private SpacesBannedTextField textField_Password;   // Поле ввода пароля
     //-------------------------------------------------------------
 
     //Инициализация
@@ -33,10 +33,10 @@ public class ServerAccessController  {
 
         // Установка значения текстовых полей
 
-        textField_URL.setMaxLength(40);
-        textField_Port.setMaxLength(40);
-        textField_User.setMaxLength(40);
-        textField_Password.setMaxLength(40);
+        textField_URL.setMaxLength(60);
+        textField_Port.setMaxLength(60);
+        textField_User.setMaxLength(60);
+        textField_Password.setMaxLength(60);
     }
 
     // Закрытие окна, при нажатии "Выход"
@@ -99,6 +99,18 @@ public class ServerAccessController  {
                 messageDialogMaker.show();
         }
     }
+    //-------------------------------------------------------------
 
+    // Обработка клика по кнопки закрытия на заголовке окна
+    private javafx.event.EventHandler<WindowEvent> closeEventHandler = new javafx.event.EventHandler<WindowEvent>() {
+        @Override
+        public void handle(WindowEvent event) {
+            if(BaseConnector.getInstance() != null) BaseConnector.getInstance().closeConnection();
+        }
+    };
+
+    public javafx.event.EventHandler<WindowEvent> getCloseEventHandler(){
+        return closeEventHandler;
+    }
     //-------------------------------------------------------------
 }

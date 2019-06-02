@@ -1,5 +1,6 @@
 package com.rudenko.start;
 
+import com.rudenko.controllers.ServerAccessController;
 import com.rudenko.models.BaseConnector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,11 +14,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-            Parent root = FXMLLoader.load(getClass().getResource("../fxml/ServerAccess.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../fxml/ServerAccess.fxml"));
+            Parent root = loader.load();
             primaryStage.setTitle("Вход");
             primaryStage.setScene(new Scene(root, 452, 357));
             primaryStage.setResizable(false);
             primaryStage.show();
+            //-------------------------------------------------------------
+            // Обработка клика по кнопки закрытия на заголовке окна
+            ServerAccessController controller = loader.getController();
+            primaryStage.setOnCloseRequest(controller.getCloseEventHandler());
 
         }
 
