@@ -32,32 +32,38 @@ public class ServerAccessController  {
     private SpacesBannedTextField textField_Password;   // Поле ввода пароля
     //-------------------------------------------------------------
     private FileWorker fileWorker;
-    private List<String> serverUserDatas;
+    //-------------------------------------------------------------
 
     //Инициализация
 
     public void initialize(){
 
-        // Установка значения текстовых полей
+        List<String> serverUserData = new ArrayList<>();
 
-        serverUserDatas = new ArrayList<>();
+        // Обращение к файлу. Если не существует - создание. Далее - чтение
 
         fileWorker = new FileWorker("ServerUserAuthorization.txt");
         if(!fileWorker.doesFileExist()) fileWorker.createFile();
-        serverUserDatas = fileWorker.fileRead();
-        if(serverUserDatas.size() == 4)
-        {
-        textField_URL.setText(serverUserDatas.get(0));
-        textField_Port.setText(serverUserDatas.get(1));
-        textField_User.setText(serverUserDatas.get(2));
-        textField_Password.setText(serverUserDatas.get(3));
-        }
+        serverUserData = fileWorker.fileRead();
+        //-------------------------------------------------
 
+        // Заполнение данными из файла если данные уже существовали
+        
+        if(serverUserData.size() == 4) {
+        textField_URL.setText(serverUserData.get(0));
+        textField_Port.setText(serverUserData.get(1));
+        textField_User.setText(serverUserData.get(2));
+        textField_Password.setText(serverUserData.get(3));
+        }
+        //-------------------------------------------------
+
+        // Установка значения текстовых полей
         textField_URL.setMaxLength(60);
         textField_Port.setMaxLength(60);
         textField_User.setMaxLength(60);
         textField_Password.setMaxLength(60);
     }
+    //-------------------------------------------------------------
 
     // Закрытие окна, при нажатии "Выход"
 
@@ -119,7 +125,7 @@ public class ServerAccessController  {
                 messageDialogMaker.show();
         }
 
-        
+        // Перезапись файла
         fileWorker.fileWrite(url, port, userName,password);
     }
     //-------------------------------------------------------------

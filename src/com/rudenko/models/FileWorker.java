@@ -22,10 +22,6 @@ public class FileWorker {
 
     // Метод создания файла
 
-    public boolean deleteFile(){
-        return file.delete();
-    }
-
     public void createFile(){
 
         if(file.exists()) {
@@ -53,6 +49,7 @@ public class FileWorker {
     }
     //----------------------------------------------------
 
+    // Запись в файл
     public void fileWrite(String...data){
         if(data.length == 0){
             System.out.println("Добавьте данные для записи в файл. ");
@@ -81,6 +78,7 @@ public class FileWorker {
     }
     //----------------------------------------------------
 
+    // Чтение из файла
     public List<String> fileRead() {
 
         List<String> list = null;
@@ -90,24 +88,32 @@ public class FileWorker {
             return null;
         }
         if(file.canRead()){
-            int counter = 0;
-            int c = 0;
-            char [] data = new char[(int) file.length()];
+            int counter = 0; // Счетчик для массива символов
+            int symbol = 0;  // Вспомогательная переменная для считывания следующего символа из файла
+            char [] data = new char[(int) file.length()]; // Массив символов
             try(FileReader reader = new FileReader(file))
             {
-
-                while((c=reader.read())!=-1){
-                    data[counter] = (char) c;
-                    counter++;
+                while((symbol=reader.read())!=-1){ // Пока не конец файла
+                    data[counter] = (char) symbol; // Добавить символ в массив
+                    counter++;                     // Увеличить счетчик
                 }
             }
             catch(IOException ex){
-                System.out.println();
+                System.out.println("Ошибка при чтении из файла: ");
+                ex.printStackTrace();
                 return null;
             }
-            String words = String.valueOf(data);
+            String words = String.valueOf(data); // Преобразование массива в строку
+
+            // Разделение строки по символу "Перевод строки" и запись данных в коллекцию
             list = new ArrayList<>(Arrays.asList(words.split("\n")));
         }
         return list;
+    }
+    //----------------------------------------------------
+
+    // Удаление файла
+    public boolean deleteFile(){
+        return file.delete();
     }
 }
