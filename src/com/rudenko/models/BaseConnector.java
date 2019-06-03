@@ -12,6 +12,15 @@ public class BaseConnector {
     private Connection connection;
     //----------------------------------------------
     private UserAuthorizationData   user;
+
+    public UserAuthorizationData getUser() {
+        return user;
+    }
+
+    public ServerAuthorizationData getServer() {
+        return server;
+    }
+
     private ServerAuthorizationData server;
     //----------------------------------------------
     private boolean wasDriverInitialized;
@@ -19,6 +28,8 @@ public class BaseConnector {
     private final String JDBC_PROTOCOL = "jdbc:postgresql://";
     private final String DRIVER_NAME   = "org.postgresql.Driver";
     //----------------------------------------------
+
+
     // Загрузка драйвера
 
     private boolean initialize(){

@@ -2,6 +2,7 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.BaseConnector;
 import com.rudenko.models.ControlOpportunitiesImprover;
+import com.rudenko.models.FileWorker;
 import com.rudenko.views.MessageDialogMaker;
 import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
@@ -10,6 +11,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ServerAccessController  {
@@ -26,12 +31,27 @@ public class ServerAccessController  {
     @FXML
     private SpacesBannedTextField textField_Password;   // Поле ввода пароля
     //-------------------------------------------------------------
+    private FileWorker fileWorker;
+    private List<String> serverUserDatas;
 
     //Инициализация
 
     public void initialize(){
 
         // Установка значения текстовых полей
+
+        serverUserDatas = new ArrayList<>();
+
+        fileWorker = new FileWorker("ServerUserAuthorization.txt");
+        if(!fileWorker.doesFileExist()) fileWorker.createFile();
+        serverUserDatas = fileWorker.fileRead();
+        if(serverUserDatas.size() == 4)
+        {
+        textField_URL.setText(serverUserDatas.get(0));
+        textField_Port.setText(serverUserDatas.get(1));
+        textField_User.setText(serverUserDatas.get(2));
+        textField_Password.setText(serverUserDatas.get(3));
+        }
 
         textField_URL.setMaxLength(60);
         textField_Port.setMaxLength(60);
@@ -98,6 +118,9 @@ public class ServerAccessController  {
                                 " или конфигурацию сервера", Alert.AlertType.ERROR);
                 messageDialogMaker.show();
         }
+
+        
+        fileWorker.fileWrite(url, port, userName,password);
     }
     //-------------------------------------------------------------
 
