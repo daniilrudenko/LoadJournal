@@ -1,7 +1,7 @@
 package com.rudenko.start;
 
 import com.rudenko.controllers.ServerAccessController;
-import com.rudenko.models.BaseConnector;
+import com.rudenko.models.EncryptionAES;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -4,6 +4,7 @@ import com.rudenko.models.BaseConnector;
 import com.rudenko.models.ControlOpportunitiesImprover;
 import com.rudenko.models.FileWorker;
 import com.rudenko.views.MessageDialogMaker;
+import com.rudenko.views.PasswordTextField;
 import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class ServerAccessController  {
     private SpacesBannedTextField textField_User;       // Поле ввода пользователя бд
 
     @FXML
-    private SpacesBannedTextField textField_Password;   // Поле ввода пароля
+    private PasswordTextField textField_Password;   // Поле ввода пароля
     //-------------------------------------------------------------
     private FileWorker fileWorker;
     //-------------------------------------------------------------
@@ -49,11 +48,11 @@ public class ServerAccessController  {
 
         // Заполнение данными из файла если данные уже существовали
         
-        if(serverUserData.size() == 4) {
+        if(serverUserData.size() == 3) {
         textField_URL.setText(serverUserData.get(0));
         textField_Port.setText(serverUserData.get(1));
         textField_User.setText(serverUserData.get(2));
-        textField_Password.setText(serverUserData.get(3));
+      //  textField_Password.setText(serverUserData.get(3));
         }
         //-------------------------------------------------
 
@@ -93,7 +92,7 @@ public class ServerAccessController  {
         MessageDialogMaker messageDialogMaker = null;
         //-------------------------------------------
         resultForTextFieldIsEmpty = ControlOpportunitiesImprover.textFieldIsEmpty(textField_URL,textField_Port,
-                textField_Password,textField_User);
+                textField_Password,textField_User,textField_Password);
         //-------------------------------------------
         if(resultForTextFieldIsEmpty.equals(ControlOpportunitiesImprover.TRUE)){
              messageDialogMaker = new MessageDialogMaker(
@@ -106,7 +105,8 @@ public class ServerAccessController  {
         url       = textField_URL.getText();
         port      = textField_Port.getText();
         userName  = textField_User.getText();
-        password  = textField_Password.getText();
+        password  = textField_Password.getValueOfTextField();
+
         //-------------------------------------------
         resultConnection = BaseConnector.getInstance().createConnection(url,port,userName,password);
         //-------------------------------------------
@@ -115,6 +115,9 @@ public class ServerAccessController  {
                     "Внимание", null,
                     "Успешное соеденение с сервером!", Alert.AlertType.INFORMATION);
             messageDialogMaker.show();
+
+            // Перезапись файла
+            fileWorker.fileWrite(url, port, userName);
         }
         else {
                 messageDialogMaker = new MessageDialogMaker(
@@ -125,8 +128,6 @@ public class ServerAccessController  {
                 messageDialogMaker.show();
         }
 
-        // Перезапись файла
-        fileWorker.fileWrite(url, port, userName,password);
     }
     //-------------------------------------------------------------
 
