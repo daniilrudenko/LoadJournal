@@ -3,10 +3,19 @@ package com.rudenko.views;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.control.TextField;
-
+import javafx.scene.control.TextFormatter;
 
 
 public class LimitedTextField extends TextField  {
+
+    /*
+        Внимание!
+        Для нужд разработки были реализованы вариации полей ввода (TextField)
+        Добавлены возможности ввода без пробелов, и возможность установки ограничения на количество символов
+        Однако, метод суперкласса setText обработан не был, по причинам остутствия необходимости.
+        Поэтому, в случае расширения данной программы, следует на это обратить внимание
+
+     */
 
     private IntegerProperty maxLength; // Значение максимальной длины
     //----------------------------------------------------------------------
@@ -57,5 +66,6 @@ public class LimitedTextField extends TextField  {
         }
     }
     //----------------------------------------------------------------------
+
 
 }

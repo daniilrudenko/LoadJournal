@@ -18,6 +18,7 @@ import java.util.List;
 
 public class ServerAccessController  {
 
+
     @FXML
     private SpacesBannedTextField textField_URL;        // Поле ввода URL
 
@@ -28,12 +29,15 @@ public class ServerAccessController  {
     private SpacesBannedTextField textField_User;       // Поле ввода пользователя бд
 
     @FXML
-    private PasswordTextField textField_Password;   // Поле ввода пароля
+    private PasswordTextField textField_Password;       // Поле ввода пароля
     //-------------------------------------------------------------
     private FileWorker fileWorker;
     //-------------------------------------------------------------
+    private String passwordFromFile;
+
 
     //Инициализация
+
 
     public void initialize(){
 
@@ -41,7 +45,7 @@ public class ServerAccessController  {
 
         // Обращение к файлу. Если не существует - создание. Далее - чтение
 
-        fileWorker = new FileWorker("ServerUserAuthorization.txt");
+        fileWorker   = new FileWorker("ServerUserAuthorization.txt");
         if(!fileWorker.doesFileExist()) fileWorker.createFile();
         serverUserData = fileWorker.fileRead();
         //-------------------------------------------------
@@ -52,8 +56,9 @@ public class ServerAccessController  {
         textField_URL.setText(serverUserData.get(0));
         textField_Port.setText(serverUserData.get(1));
         textField_User.setText(serverUserData.get(2));
-      //  textField_Password.setText(serverUserData.get(3));
+
         }
+
         //-------------------------------------------------
 
         // Установка значения текстовых полей
@@ -88,6 +93,7 @@ public class ServerAccessController  {
         String userName = null;
         String password = null;
         String port     = null;
+
         //-------------------------------
         MessageDialogMaker messageDialogMaker = null;
         //-------------------------------------------
@@ -97,7 +103,7 @@ public class ServerAccessController  {
         if(resultForTextFieldIsEmpty.equals(ControlOpportunitiesImprover.TRUE)){
              messageDialogMaker = new MessageDialogMaker(
                     "Внимание", null,
-                    "Пожалуйста, заполните все поля", Alert.AlertType.WARNING);
+                    "Пожалуйста, заполните все поля.", Alert.AlertType.WARNING);
             messageDialogMaker.show();
             return;
         }
@@ -117,14 +123,15 @@ public class ServerAccessController  {
             messageDialogMaker.show();
 
             // Перезапись файла
+
             fileWorker.fileWrite(url, port, userName);
         }
         else {
                 messageDialogMaker = new MessageDialogMaker(
                         "Внимание", null,
                         "Не удалось подключиться к серверу.\n" +
-                                "Проверьте соеденение с интернетом, корректность ввода данных" +
-                                " или конфигурацию сервера", Alert.AlertType.ERROR);
+                                "Проверьте соеденение с интернетом, корректность введенных данных данных" +
+                                " или конфигурацию сервера.", Alert.AlertType.ERROR);
                 messageDialogMaker.show();
         }
 
@@ -132,11 +139,8 @@ public class ServerAccessController  {
     //-------------------------------------------------------------
 
     // Обработка клика по кнопки закрытия на заголовке окна
-    private javafx.event.EventHandler<WindowEvent> closeEventHandler = new javafx.event.EventHandler<WindowEvent>() {
-        @Override
-        public void handle(WindowEvent event) {
-            if(BaseConnector.getInstance() != null) BaseConnector.getInstance().closeConnection();
-        }
+    private javafx.event.EventHandler<WindowEvent> closeEventHandler = event -> {
+        if(BaseConnector.getInstance() != null) BaseConnector.getInstance().closeConnection();
     };
 
     public javafx.event.EventHandler<WindowEvent> getCloseEventHandler(){
