@@ -1,85 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <?import com.rudenko.views.SpacesBannedTextField?>
 <?import com.rudenko.views.PasswordTextField?>
-
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="357.0"
-      prefWidth="452.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.rudenko.controllers.ServerAccessController">
-   <HBox prefHeight="55.0" prefWidth="200.0">
-      <VBox.margin>
-         <Insets top="20.0"/>
-      </VBox.margin>
-      <Label text="URL:">
-         <HBox.margin>
-            <Insets left="27.0" top="25.0"/>
-         </HBox.margin>
-      </Label>
-      <SpacesBannedTextField fx:id="textField_URL" focusTraversable="false" prefHeight="27.0" prefWidth="269.0"
-                             promptText="IP">
-         <HBox.margin>
-            <Insets left="100.0" top="21.0"/>
-         </HBox.margin>
-      </SpacesBannedTextField>
-   </HBox>
-   <HBox prefHeight="55.0" prefWidth="200.0">
-      <Label text="Порт:">
-         <HBox.margin>
-            <Insets left="27.0" top="25.0"/>
-         </HBox.margin>
-      </Label>
-      <SpacesBannedTextField fx:id="textField_Port" focusTraversable="false" prefHeight="27.0" prefWidth="269.0"
-                             promptText="8080">
-         <HBox.margin>
-            <Insets left="93.0" top="21.0"/>
-         </HBox.margin>
-      </SpacesBannedTextField>
-   </HBox>
-   <HBox prefHeight="55.0" prefWidth="200.0">
-      <Label text="Пользователь:">
-         <HBox.margin>
-            <Insets left="27.0" top="25.0"/>
-         </HBox.margin>
-      </Label>
-      <SpacesBannedTextField fx:id="textField_User" focusTraversable="false" prefHeight="27.0" prefWidth="269.0"
-                             promptText="postgres">
-         <HBox.margin>
-            <Insets left="36.0" top="21.0"/>
-         </HBox.margin>
-      </SpacesBannedTextField>
-   </HBox>
-   <HBox prefHeight="55.0" prefWidth="200.0">
-      <Label text="Пароль:">
-         <HBox.margin>
-            <Insets left="27.0" top="25.0"/>
-         </HBox.margin>
-      </Label>
-      <PasswordTextField fx:id="textField_Password" focusTraversable="false" prefHeight="27.0" prefWidth="269.0"
-                         promptText="root">
-         <HBox.margin>
-            <Insets left="77.0" top="21.0"/>
-         </HBox.margin>
-      </PasswordTextField>
-   </HBox>
-   <HBox prefHeight="55.0" prefWidth="200.0">
-      <VBox.margin>
-         <Insets top="30.0"/>
-      </VBox.margin>
-      <Button cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#onClose"
-              prefHeight="25.0" prefWidth="105.0" text="Выход">
-         <HBox.margin>
-            <Insets left="104.0" top="20.0"/>
-         </HBox.margin>
-      </Button>
-      <Button defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#onAccept"
-              prefHeight="25.0" prefWidth="105.0" text="Подтвердить">
-         <HBox.margin>
-            <Insets left="40.0" top="20.0"/>
-         </HBox.margin>
-      </Button>
-   </HBox>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.ServerAccessController">
+   <children>
+      <HBox prefHeight="55.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+         <children>
+            <Label text="URL:">
+               <HBox.margin>
+                  <Insets left="27.0" top="25.0" />
+               </HBox.margin>
+            </Label>
+            <SpacesBannedTextField fx:id="textField_URL" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="115.255.95.115:5454/">
+               <HBox.margin>
+                  <Insets left="100.0" top="21.0" />
+               </HBox.margin>
+            </SpacesBannedTextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="55.0" prefWidth="200.0">
+         <children>
+            <Label text="Пользователь:">
+               <HBox.margin>
+                  <Insets left="27.0" top="25.0" />
+               </HBox.margin>
+            </Label>
+            <SpacesBannedTextField fx:id="textField_User" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="postgres">
+               <HBox.margin>
+                  <Insets left="36.0" top="21.0" />
+               </HBox.margin>
+            </SpacesBannedTextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="55.0" prefWidth="200.0">
+         <children>
+            <Label text="Пароль:">
+               <HBox.margin>
+                  <Insets left="27.0" top="25.0" />
+               </HBox.margin>
+            </Label>
+            <PasswordTextField fx:id="textField_Password" focusTraversable="false" prefHeight="27.0" prefWidth="269.0" promptText="root">
+               <HBox.margin>
+                  <Insets left="77.0" top="21.0" />
+               </HBox.margin>
+            </PasswordTextField>
+         </children>
+      </HBox>
+      <HBox prefHeight="55.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets top="30.0" />
+         </VBox.margin>
+         <children>
+            <Button cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#onClose" prefHeight="25.0" prefWidth="102.0" text="Выход">
+               <HBox.margin>
+                  <Insets left="102.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#onAccept" prefHeight="25.0" prefWidth="102.0" text="Подтвердить">
+               <HBox.margin>
+                  <Insets left="40.0" top="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+   </children>
 </VBox>

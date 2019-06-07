@@ -14,13 +14,7 @@ public class ServerAuthorizationData {
         this.url = url;
     }
 
-    public String getPort() {
-        return port;
-    }
 
-    public void setPort(String port) {
-        this.port = port;
-    }
 
     //------------------------
      public ServerAuthorizationData(){
@@ -29,7 +23,6 @@ public class ServerAuthorizationData {
 
     public ServerAuthorizationData(String url, String port){
         this.url  = url;
-        this.port = port;
     }
     //------------------------
 

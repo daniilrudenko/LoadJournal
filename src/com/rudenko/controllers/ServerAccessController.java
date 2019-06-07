@@ -2,16 +2,22 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.BaseConnector;
 import com.rudenko.models.ControlOpportunitiesImprover;
+import com.rudenko.models.DatabaseQueries;
 import com.rudenko.models.FileWorker;
 import com.rudenko.views.MessageDialogMaker;
 import com.rudenko.views.PasswordTextField;
 import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +27,6 @@ public class ServerAccessController  {
 
     @FXML
     private SpacesBannedTextField textField_URL;        // Поле ввода URL
-
-    @FXML
-    private SpacesBannedTextField textField_Port;       // Поле ввода значения порта
 
     @FXML
     private SpacesBannedTextField textField_User;       // Поле ввода пользователя бд
@@ -52,10 +55,9 @@ public class ServerAccessController  {
 
         // Заполнение данными из файла если данные уже существовали
         
-        if(serverUserData.size() == 3) {
+        if(serverUserData.size() == 2) {
         textField_URL.setText(serverUserData.get(0));
-        textField_Port.setText(serverUserData.get(1));
-        textField_User.setText(serverUserData.get(2));
+        textField_User.setText(serverUserData.get(1));
 
         }
 
@@ -63,7 +65,6 @@ public class ServerAccessController  {
 
         // Установка значения текстовых полей
         textField_URL.setMaxLength(60);
-        textField_Port.setMaxLength(60);
         textField_User.setMaxLength(60);
         textField_Password.setMaxLength(60);
     }
@@ -83,7 +84,7 @@ public class ServerAccessController  {
     // Соеденение с сервером. Нажатие кнопки "Применить"
 
     @FXML
-    private void onAccept() {
+    private void onAccept(ActionEvent actionEvent) throws IOException {
 
         boolean resultConnection = false;
         //-------------------------------
@@ -97,7 +98,7 @@ public class ServerAccessController  {
         //-------------------------------
         MessageDialogMaker messageDialogMaker = null;
         //-------------------------------------------
-        resultForTextFieldIsEmpty = ControlOpportunitiesImprover.textFieldIsEmpty(textField_URL,textField_Port,
+        resultForTextFieldIsEmpty = ControlOpportunitiesImprover.textFieldIsEmpty(textField_URL,
                 textField_Password,textField_User,textField_Password);
         //-------------------------------------------
         if(resultForTextFieldIsEmpty.equals(ControlOpportunitiesImprover.TRUE)){
@@ -109,22 +110,34 @@ public class ServerAccessController  {
         }
         //-------------------------------------------
         url       = textField_URL.getText();
-        port      = textField_Port.getText();
         userName  = textField_User.getText();
         password  = textField_Password.getValueOfTextField();
 
         //-------------------------------------------
-        resultConnection = BaseConnector.getInstance().createConnection(url,port,userName,password);
+        resultConnection = BaseConnector.getInstance().createConnection(url,userName,password);
         //-------------------------------------------
         if(resultConnection){
             messageDialogMaker = new MessageDialogMaker(
                     "Внимание", null,
                     "Успешное соеденение с сервером!", Alert.AlertType.INFORMATION);
+
+            fileWorker.fileWrite(url, userName);
             messageDialogMaker.show();
-
-            // Перезапись файла
-
-            fileWorker.fileWrite(url, port, userName);
+            //-------------------------------------------
+            Node  source = (Node)  actionEvent.getSource();
+            Stage stage  = (Stage) source.getScene().getWindow();
+            stage.close();
+            /*
+            Stage adminStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../fxml/AdministratorWorkflow.fxml"));
+            Parent root = loader.load();
+            adminStage.setTitle("Администратор");
+            Scene scene = new Scene(root,452,357);
+            adminStage.setScene(scene);
+            adminStage.setResizable(false);
+            // close the dialog.
+             */
         }
         else {
                 messageDialogMaker = new MessageDialogMaker(

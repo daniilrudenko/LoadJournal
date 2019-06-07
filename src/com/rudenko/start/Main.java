@@ -25,7 +25,7 @@ public class Main extends Application {
             loader.setLocation(getClass().getResource("../fxml/ServerAccess.fxml"));
             Parent root = loader.load();
             primaryStage.setTitle("Вход");
-            Scene scene = new Scene(root,452,357);
+            Scene scene = new Scene(root,452,294);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();

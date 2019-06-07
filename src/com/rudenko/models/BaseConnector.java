@@ -12,13 +12,17 @@ public class BaseConnector {
     private Connection connection;
     //----------------------------------------------
     private UserAuthorizationData   user;
-
+    //----------------------------------------------
     public UserAuthorizationData getUser() {
         return user;
     }
 
     public ServerAuthorizationData getServer() {
         return server;
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 
     private ServerAuthorizationData server;
@@ -58,24 +62,21 @@ public class BaseConnector {
     }
     //----------------------------------------------
 
-    public boolean createConnection(String url, String port, String userName, String password){
+    public boolean createConnection(String url, String userName, String password){
 
         boolean result = false;
 
         if(initialize()) {
             //----------------------------------
             server.setUrl(JDBC_PROTOCOL);
-            server.setPort(":");
             //----------------------------------
             server.setUrl(server.getUrl().concat(url));
-            server.setPort(server.getPort().concat(port));
             //----------------------------------
             user.setUserName(userName);
+            //----------------------------------
             user.setPassword(password);
             //----------------------------------
-            server.setPort(server.getPort().concat("/"));
-            server.setUrl(server.getUrl().concat(server.getPort()));
-            //--------------------------------------------------------
+
             closeConnection();
 
             //----------------------------------
@@ -89,6 +90,7 @@ public class BaseConnector {
                 result = false;
                 System.out.println("Не удалось подключиться к серверу: ");
                 exc.printStackTrace();
+                System.out.println(exc.getSQLState());
             }
         }
         return result;
@@ -101,6 +103,12 @@ public class BaseConnector {
         return instance;
     }
     //----------------------------------------------
+
+    public boolean doesConnectionExist(){
+        boolean exist = false;
+        exist = connection != null;
+        return exist;
+    }
 
     public void closeConnection() {
 

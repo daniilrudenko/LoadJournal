@@ -1,4 +1,4 @@
 package com.rudenko.controllers;
 
-public class AdministratorWorkFlowController {
+public class AdministratorWorkflowController {
 }
