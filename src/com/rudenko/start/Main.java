@@ -18,8 +18,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-            menuBar = new MenuBar();
-            help    = new Menu("Справка");
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../fxml/ServerAccess.fxml"));

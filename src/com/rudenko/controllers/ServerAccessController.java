@@ -1,18 +1,12 @@
 package com.rudenko.controllers;
 
-import com.rudenko.models.BaseConnector;
-import com.rudenko.models.ControlOpportunitiesImprover;
-import com.rudenko.models.DatabaseQueries;
-import com.rudenko.models.FileWorker;
+import com.rudenko.models.*;
 import com.rudenko.views.MessageDialogMaker;
 import com.rudenko.views.PasswordTextField;
 import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -34,9 +28,10 @@ public class ServerAccessController  {
     @FXML
     private PasswordTextField textField_Password;       // Поле ввода пароля
     //-------------------------------------------------------------
-    private FileWorker fileWorker;
+    private FileWorker fileWorkerUserData;
+    private FileWorker fileWorkerDatabaseFlag;
     //-------------------------------------------------------------
-    private String passwordFromFile;
+    private boolean databaseFlag;
 
 
     //Инициализация
@@ -44,25 +39,23 @@ public class ServerAccessController  {
 
     public void initialize(){
 
-        List<String> serverUserData = new ArrayList<>();
-
-        // Обращение к файлу. Если не существует - создание. Далее - чтение
-
-        fileWorker   = new FileWorker("ServerUserAuthorization.txt");
-        if(!fileWorker.doesFileExist()) fileWorker.createFile();
-        serverUserData = fileWorker.fileRead();
+        fileWorkerDatabaseFlag = new FileWorker("DatabaseFlag.txt");
+        if(!fileWorkerDatabaseFlag.doesFileExist()){ databaseFlag = false; }
+        else databaseFlag = true;
         //-------------------------------------------------
-
+        // Обращение к файлу. Если не существует - создание. Далее - чтение
+        List<String> serverUserData = new ArrayList<>();
+        fileWorkerUserData = new FileWorker("ServerUserAuthorization.txt");
+        if(!fileWorkerUserData.doesFileExist()) fileWorkerUserData.createFile();
+        serverUserData = fileWorkerUserData.fileRead();
+        //-------------------------------------------------
         // Заполнение данными из файла если данные уже существовали
         
         if(serverUserData.size() == 2) {
         textField_URL.setText(serverUserData.get(0));
         textField_User.setText(serverUserData.get(1));
-
         }
-
         //-------------------------------------------------
-
         // Установка значения текстовых полей
         textField_URL.setMaxLength(60);
         textField_User.setMaxLength(60);
@@ -114,14 +107,21 @@ public class ServerAccessController  {
         password  = textField_Password.getValueOfTextField();
 
         //-------------------------------------------
-        resultConnection = BaseConnector.getInstance().createConnection(url,userName,password);
+        resultConnection = BaseConnector.getInstance().createConnection(url,userName,password,ServerAuthorizationData.DATABASE_NAME);
         //-------------------------------------------
         if(resultConnection){
             messageDialogMaker = new MessageDialogMaker(
                     "Внимание", null,
                     "Успешное соеденение с сервером!", Alert.AlertType.INFORMATION);
 
-            fileWorker.fileWrite(url, userName);
+            fileWorkerUserData.fileWrite(url, userName);
+            //-------------------------------------------
+            DatabaseQueries databaseQueries = new DatabaseQueries();
+            if(!databaseFlag) {
+                databaseQueries.createDatabase(ServerAuthorizationData.DATABASE_NAME);
+                fileWorkerDatabaseFlag.createFile();
+            }
+            //-------------------------------------------
             messageDialogMaker.show();
             //-------------------------------------------
             Node  source = (Node)  actionEvent.getSource();

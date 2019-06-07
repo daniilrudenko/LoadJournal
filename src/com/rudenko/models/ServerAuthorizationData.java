@@ -3,7 +3,7 @@ package com.rudenko.models;
 public class ServerAuthorizationData {
 
     private String url;
-    private String port;
+    public static final String DATABASE_NAME = "university";
     //------------------------
 
     public String getUrl() {

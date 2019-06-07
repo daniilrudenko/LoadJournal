@@ -62,7 +62,7 @@ public class BaseConnector {
     }
     //----------------------------------------------
 
-    public boolean createConnection(String url, String userName, String password){
+    public boolean createConnection(String url, String userName, String password,String database){
 
         boolean result = false;
 
@@ -76,6 +76,7 @@ public class BaseConnector {
             //----------------------------------
             user.setPassword(password);
             //----------------------------------
+            server.setUrl(server.getUrl().concat(database));
 
             closeConnection();
 
