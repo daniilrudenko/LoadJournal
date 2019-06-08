@@ -10,7 +10,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +30,15 @@ public class ServerAccessController  {
     private FileWorker fileWorkerUserData;
     private FileWorker fileWorkerDatabaseFlag;
     //-------------------------------------------------------------
-    private boolean databaseFlag;
+    public static boolean databaseFlag = false;
+    DatabaseQueries databaseQueries ;
 
 
     //Инициализация
 
 
     public void initialize(){
+
 
         fileWorkerDatabaseFlag = new FileWorker("DatabaseFlag.txt");
         if(!fileWorkerDatabaseFlag.doesFileExist()){ databaseFlag = false; }
@@ -80,19 +81,18 @@ public class ServerAccessController  {
     private void onAccept(ActionEvent actionEvent) throws IOException {
 
         boolean resultConnection = false;
+        boolean resultConnectionForCreatingDB = false;
         //-------------------------------
         String resultForTextFieldIsEmpty;
         //-------------------------------
         String url      = null;
         String userName = null;
         String password = null;
-        String port     = null;
 
         //-------------------------------
         MessageDialogMaker messageDialogMaker = null;
         //-------------------------------------------
-        resultForTextFieldIsEmpty = ControlOpportunitiesImprover.textFieldIsEmpty(textField_URL,
-                textField_Password,textField_User,textField_Password);
+        resultForTextFieldIsEmpty = ControlOpportunitiesImprover.textFieldIsEmpty(textField_URL, textField_User,textField_Password);
         //-------------------------------------------
         if(resultForTextFieldIsEmpty.equals(ControlOpportunitiesImprover.TRUE)){
              messageDialogMaker = new MessageDialogMaker(
@@ -107,6 +107,13 @@ public class ServerAccessController  {
         password  = textField_Password.getValueOfTextField();
 
         //-------------------------------------------
+        if(!databaseFlag) {
+            BaseConnector.getInstance().createConnection(url,userName,password,"");
+            databaseQueries = new DatabaseQueries();
+            databaseQueries.createDatabase(ServerAuthorizationData.DATABASE_NAME);
+            BaseConnector.getInstance().closeConnection();
+            databaseQueries = null;
+        }
         resultConnection = BaseConnector.getInstance().createConnection(url,userName,password,ServerAuthorizationData.DATABASE_NAME);
         //-------------------------------------------
         if(resultConnection){
@@ -118,26 +125,25 @@ public class ServerAccessController  {
             //-------------------------------------------
             DatabaseQueries databaseQueries = new DatabaseQueries();
             if(!databaseFlag) {
-                databaseQueries.createDatabase(ServerAuthorizationData.DATABASE_NAME);
+                databaseQueries.createTable("faculties",QueriesData.CREATE_FACULTIES);
+                databaseQueries.createTable("departments",QueriesData.CREATE_DEPARTMENTS);
+                databaseQueries.createTable("faculties",QueriesData.CREATE_FACULTIES);
+                databaseQueries.createTable("teachers",QueriesData.CREATE_TEACHERS);
+                databaseQueries.createTable("teachers_plus_departments",QueriesData.CREATE_TEACHERS_PLUS_DEPARTMENTS);
+                databaseQueries.createTable("groups",QueriesData.CREATE_GROUPS);
+                databaseQueries.createTable("groups_plus_departments",QueriesData.CREATE_GROUPS_PLUS_DEPARTMENTS);
+                databaseQueries.createTable("subjects",QueriesData.CREATE_SUBJECTS);
+                databaseQueries.createTable("subjects_plus_departments",QueriesData.CREATE_SUBJECTS_PLUS_DEPARTMENTS);
+                databaseQueries.createTable("rings",QueriesData.CREATE_RINGS);
+                databaseQueries.createTable("load",QueriesData.CREATE_LOAD);
+                databaseQueries.createTable("plan",QueriesData.CREATE_PLAN);
                 fileWorkerDatabaseFlag.createFile();
             }
             //-------------------------------------------
-            messageDialogMaker.show();
             //-------------------------------------------
             Node  source = (Node)  actionEvent.getSource();
             Stage stage  = (Stage) source.getScene().getWindow();
             stage.close();
-            /*
-            Stage adminStage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../fxml/AdministratorWorkflow.fxml"));
-            Parent root = loader.load();
-            adminStage.setTitle("Администратор");
-            Scene scene = new Scene(root,452,357);
-            adminStage.setScene(scene);
-            adminStage.setResizable(false);
-            // close the dialog.
-             */
         }
         else {
                 messageDialogMaker = new MessageDialogMaker(

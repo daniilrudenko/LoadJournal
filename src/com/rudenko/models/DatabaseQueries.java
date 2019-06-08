@@ -1,6 +1,10 @@
 package com.rudenko.models;
 
+import com.rudenko.controllers.ServerAccessController;
+import sun.tools.jconsole.Tab;
+
 import java.sql.*;
+import java.util.*;
 
 public class DatabaseQueries {
 
@@ -12,53 +16,13 @@ public class DatabaseQueries {
 
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-    //------------------------Создание базы данных, удаление. Таблица администраторов-----------------------------------
+    //-----------------------------------Создание базы данных, удаление-------------------------------------------------
 
 
     // Создание базы данных
 
-    public void createDatabase(String databaseName){
+    public void createDatabase(String databaseName) {
 
-        if(!BaseConnector.getInstance().doesConnectionExist()){
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        }
-        else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create database " + databaseName);
-                    System.out.println("База данных " + "\"" + databaseName + "\" " + "создана.");
-                } catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-    //------------------------------------------------------------------------------------------------
-    public void deleteDatabase(String databaseName){
-
-        if(!BaseConnector.getInstance().doesConnectionExist()){
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        }
-        else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("drop database " + databaseName);
-                    System.out.println("База данных " + "\"" + databaseName + "\" " + "создана.");
-                } catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-    //------------------------------------------------------------------------------------------------
-
-    //Создание таблицы администраторов
-
-    public void createTableAdministrators() {
 
         if (!BaseConnector.getInstance().doesConnectionExist()) {
             System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
@@ -66,28 +30,192 @@ public class DatabaseQueries {
             if (statement == null) {
                 try {
                     statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists administrators(" +
-                            "id serial primary key, " +
-                            "login character varying (30)," +
-                            "password character varying (30)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Администраторы\" " + "создана.");
-                }catch (SQLException e) {
+                } catch (SQLException e) {
                     System.out.println("Не удалось создать запрос: ");
                     e.printStackTrace();
                 }
-
+            }
+            try {
+                statement.executeUpdate("create database " + databaseName);
+                System.out.println("База данных " + "\"" + databaseName + "\" " + "создана.");
+            } catch (SQLException e) {
+                System.out.println("Не удалось выполнить запрос");
+                e.printStackTrace();
             }
         }
     }
+
+    //------------------------------------------------------------------------------------------------
+    public void deleteDatabase(String databaseName) {
+
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                statement.executeUpdate("drop database " + databaseName);
+                System.out.println("База данных " + "\"" + databaseName + "\" " + "удалена.");
+            } catch (SQLException e) {
+                System.out.println("Не удалось выполнить запрос");
+                e.printStackTrace();
+            }
+        }
+    }
+    //------------------------------------------------------------------------------------------------
+
 
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     //---------------------------------------------Создание таблиц------------------------------------------------------
 
-    //Создание таблицы факультетов
+    public void createTable(String tableName, String query){
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
 
-    public void createTableFaculties() {
+            }
+            try {
+                statement.executeUpdate(query);
+                System.out.println("Таблица " + "\"" + tableName + "\" " + "создана.");
+            } catch (SQLException e) {
+                System.out.println("Не удалось выполнить запрос: ");
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------Удаление таблиц и данных--------------------------------------------------
+
+    public void deleteTable(String tableName) {
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+
+            try {
+                preparedStatement = BaseConnector.getInstance().getConnection().prepareStatement("drop table " + tableName);
+                preparedStatement.execute();
+                System.out.println("Таблица " + "\"" + tableName + "\" " + "удалена.");
+            } catch (SQLException e) {
+                System.out.println("Проблема с запросом: ");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void deleteAllTableValues(String tableName) {
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            try {
+                preparedStatement = BaseConnector.getInstance().getConnection().prepareStatement("delete from " + tableName + "");
+                preparedStatement.execute();
+                System.out.println("Все данные из таблицы " + "\"" + tableName + "\" " + "удалены.");
+            } catch (SQLException e) {
+                System.out.println("Проблема с запросом: ");
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public void deleteRow(String tableName, int number) {
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+
+            try {
+                preparedStatement = BaseConnector.getInstance().getConnection().prepareStatement("delete from " + tableName + " where id = ?");
+                preparedStatement.setInt(1, number);
+                preparedStatement.execute();
+                System.out.println("Строка из таблицы" + "\"" + tableName + "\"" + "," + " " + "где id = " + "\"" + tableName + "\" " + "-" + "удалена.");
+            } catch (SQLException e) {
+                System.out.println("Проблема с запросом: ");
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------Вставка в таблицы------------------------------------------------------
+
+
+    public void insertTable(Map<String,String> map , String tableName) {
+
+
+        Set<String> listKeys = map.keySet();
+        Collection<String> listValues= map.values();
+        String fieldName = "(";
+        String fieldValues = "(\'";
+        List<String> keys = new ArrayList<>(listKeys);
+        List<String> values = new ArrayList<>(listValues);
+        Collections.reverse(keys);
+        Collections.reverse(values);
+        //---------------------------------------------------
+        for(int i = 0; i< keys.size(); i++){
+            if(i + 1 == keys.size()){
+                fieldName = fieldName.concat(keys.get(i) + ")");
+                fieldValues = fieldValues.concat(values.get(i) + "\')");
+                break;
+            }
+            fieldName = fieldName.concat(keys.get(i));
+            fieldName = fieldName.concat(",");
+            fieldValues = fieldValues.concat(values.get(i));
+            fieldValues = fieldValues.concat("\',\'");
+
+        }
+        //---------------------------------------------------
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                statement.executeUpdate("insert into " + tableName + " " + fieldName  + " values " +
+                      fieldValues);
+                System.out.println("Вставка данных в таблицу " + "\"" + tableName + "\" " + " прошла успешно");
+            } catch (SQLException e) {
+                System.out.println("Не удалось выполнить запрос: ");
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------Вывод данных из таблиц----------------------------------------------------
+
+    public List<String> getData(String tableName) {
+
+        List<String> listTimes = new ArrayList<>();
 
         if (!BaseConnector.getInstance().doesConnectionExist()) {
             System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
@@ -95,272 +223,60 @@ public class DatabaseQueries {
             if (statement == null) {
                 try {
                     statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists faculties(" +
-                            "id serial primary key, " +
-                            "name character varying (30)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Факультеты\" " + "создана.");
-                }catch (SQLException e) {
+
+                } catch (SQLException e) {
                     System.out.println("Не удалось создать запрос: ");
                     e.printStackTrace();
                 }
-
+            }
+            try {
+                resultSet = statement.executeQuery("select * from " + tableName);
+                System.out.println("Данные из таблицы " + tableName + " получены");
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+            while (true) {
+                try {
+                    if (!resultSet.next()) break;
+                    listTimes.add(resultSet.getString(2));
+                } catch (SQLException e) {
+                    System.out.println("Ошибка при считывании данных: ");
+                    e.printStackTrace();
+                }
             }
         }
+        return listTimes;
     }
-    //------------------------------------------------------------------------------------------------
-    //Создание таблицы кафедр
 
-    public void createTableDepartments() {
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------Вывод id---------------------------------------------------------
 
+    public void getId(String tableName, String field, String value) {
+        int res = -1;
         if (!BaseConnector.getInstance().doesConnectionExist()) {
             System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
         } else {
             if (statement == null) {
                 try {
                     statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists departments(" +
-                            "id serial primary key, " +
-                            "faculties_id integer references faculties(id)," +
-                            "name character varying (30)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Кафедры\" " + "создана.");
-                }catch (SQLException e) {
+                } catch (SQLException e) {
                     System.out.println("Не удалось создать запрос: ");
                     e.printStackTrace();
                 }
 
             }
-        }
-    }
-    //------------------------------------------------------------------------------------------------
-
-    public void createTableTeachers() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists teachers(" +
-                            "id serial primary key, " +
-                            "name character varying (30)," +
-                            "surname character varying (30)," +
-                            "patronymic character varying (30)," +
-                            "login character varying(30),"+
-                            "password character varying(30)"+
-                            ");");
-                    System.out.println("Таблица " + "\"Преподаватели\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
+            try {
+                resultSet = statement.executeQuery("select " + tableName + ".id from " + tableName + " where " + tableName + "." + field + "= " + "\'" + value + "\'");
+                while (resultSet.next())
+                    res = resultSet.getInt(1);
+                System.out.println("ID получен из - " + "faculties");
+            } catch (SQLException e) {
+                System.out.println("Не удалось выполнить запрос: ");
+                e.printStackTrace();
             }
         }
     }
 
-    // Таблица преподаватели + кафедры
-
-    public void createTableTeachersPlusDepartments() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists teachers_plus_departments(" +
-                            "id serial primary key, " +
-                            "teachers_id integer references departments(id)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Преподаватели + Кафедры\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-
-    //------------------------------------------------------------------------------------------------
-
-    // Таблица групп
-
-    public void createTableGroups() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists groups(" +
-                            "id serial primary key, " +
-                            "name character varying (30)," +
-                            "form character varying (30)," +
-                            "year character varying (30)," +
-                            "login character varying(30)"+
-                            ");");
-                    System.out.println("Таблица " + "\"Группы\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-    //Таблица группы + кафедры
-
-    public void createTableGroupsPlusDepartments() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists groups_plus_departments(" +
-                            "id serial primary key, " +
-                            "groups_id integer references departments(id)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Группы плюс кафедры\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-    //------------------------------------------------------------------------------------------------
-
-    //Таблица предметы
-
-    public void createTableSubjects() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists subjects(" +
-                            "id serial primary key, " +
-                            "name character varying (30)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Предметы\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-    // Таблица предметы + кафедры
-
-    public void createTableSubjectsPlusDepartments() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists subjects_plus_departments(" +
-                            "id serial primary key, " +
-                            "subjects_id integer references departments(id)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Предметы плюс кафедры\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-    //------------------------------------------------------------------------------------------------
-
-    public void createTableLoad() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists load(" +
-                            "id serial primary key, " +
-                            "name character varying (30)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Виды нагрузки\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-    //------------------------------------------------------------------------------------------------
-
-    //Таблица тип плана
-
-    public void createTablePlan() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists plan(" +
-                            "id serial primary key, " +
-                            "name character varying (30)" +
-                            ");");
-                    System.out.println("Таблица " + "\"Тип плана\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
-    //------------------------------------------------------------------------------------------------
-
-    // Таблица расписание звонко
-
-    public void createTableRings() {
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                    statement.executeUpdate("create table if not exists rings(" +
-                            "id serial primary key, " +
-                            "number character varying (30)," +
-                            "start character varying(30),"+
-                            "end character varying(30)"+
-                            ");");
-                    System.out.println("Таблица " + "\"Расписание звонков\" " + "создана.");
-                }catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-
-            }
-        }
-    }
 }

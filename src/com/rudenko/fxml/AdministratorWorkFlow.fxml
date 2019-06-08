@@ -6,9 +6,34 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.rudenko.controllers.AdministratorWorkflowController"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="125.0" prefWidth="200.0">
+         <children>
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Факультеты" />
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Кафедры" />
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Преподаватели" />
+         </children>
+      </HBox>
+      <HBox prefHeight="125.0" prefWidth="200.0">
+         <children>
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Администраторы" />
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Группы" />
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Предметы" />
+         </children>
+      </HBox>
+      <HBox prefHeight="125.0" prefWidth="200.0">
+         <children>
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Расписание звонков" />
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Виды нагрузки" />
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Типы плана" />
+         </children>
+      </HBox>
+      <HBox prefHeight="125.0" prefWidth="200.0">
+         <children>
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="699.0" text="Создать расписание" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

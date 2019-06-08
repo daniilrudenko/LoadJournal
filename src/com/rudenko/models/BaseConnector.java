@@ -1,6 +1,8 @@
 package com.rudenko.models;
 
 
+import com.rudenko.controllers.ServerAccessController;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -83,15 +85,17 @@ public class BaseConnector {
             //----------------------------------
             try {
 
+                String messageServerSuccess = "Успешное соеденение с сервером";
+                String messageServerAndBaseSuccess = "Успешное соеденение с сервером и базой данных";
                 this.connection = DriverManager.getConnection(server.getUrl(), user.getUserName(),user.getPassword());
-                System.out.println("Успешное соеденение с сервером ");
+                if(database.equals("")) System.out.println(messageServerSuccess);
+                else System.out.println(messageServerAndBaseSuccess);
                 result = true;
 
             } catch (SQLException exc) {
                 result = false;
                 System.out.println("Не удалось подключиться к серверу: ");
                 exc.printStackTrace();
-                System.out.println(exc.getSQLState());
             }
         }
         return result;
