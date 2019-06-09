@@ -1,6 +1,12 @@
 package com.rudenko.views;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MessageDialogMaker {
 
@@ -50,5 +56,7 @@ public class MessageDialogMaker {
 
         alertObj.showAndWait();
     }
+
+
 
 }

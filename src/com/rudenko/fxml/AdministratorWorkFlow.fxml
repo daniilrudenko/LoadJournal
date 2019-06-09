@@ -1,38 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="699.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.AdministratorWorkflowController">
    <children>
       <HBox prefHeight="125.0" prefWidth="200.0">
          <children>
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Факультеты" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Кафедры" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Преподаватели" />
+            <Button fx:id="btnFaculties" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Факультеты" />
+            <Button fx:id="btnDepartments" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Кафедры" />
+            <Button fx:id="btnTeachers" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Преподаватели" />
          </children>
       </HBox>
       <HBox prefHeight="125.0" prefWidth="200.0">
          <children>
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Администраторы" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Группы" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Предметы" />
+            <Button fx:id="btnAdministrators" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Администраторы" />
+            <Button fx:id="btnGroups" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Группы" />
+            <Button fx:id="btnSubjects" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Предметы" />
          </children>
       </HBox>
       <HBox prefHeight="125.0" prefWidth="200.0">
          <children>
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Расписание звонков" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Виды нагрузки" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Типы плана" />
+            <Button fx:id="btnPlan" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Типы плана" />
+            <Button fx:id="btnLoad" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Виды нагрузки" />
+            <Button fx:id="btnRings" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Расписание звонков" />
          </children>
       </HBox>
       <HBox prefHeight="125.0" prefWidth="200.0">
          <children>
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="699.0" text="Создать расписание" />
+            <Button fx:id="btnTimeTable" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Создать расписание" />
+            <Button fx:id="btnExit" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Выход" />
+            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Помощь" />
          </children>
       </HBox>
    </children>

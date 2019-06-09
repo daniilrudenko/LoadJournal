@@ -113,7 +113,7 @@ public class DatabaseQueries {
             try {
                 preparedStatement = BaseConnector.getInstance().getConnection().prepareStatement("drop table " + tableName);
                 preparedStatement.execute();
-                System.out.println("Таблица " + "\"" + tableName + "\" " + "удалена.");
+                System.out.println("Таблица " + "\"" + tableName + "\" " + "удалена");
             } catch (SQLException e) {
                 System.out.println("Проблема с запросом: ");
                 e.printStackTrace();
@@ -129,7 +129,7 @@ public class DatabaseQueries {
             try {
                 preparedStatement = BaseConnector.getInstance().getConnection().prepareStatement("delete from " + tableName + "");
                 preparedStatement.execute();
-                System.out.println("Все данные из таблицы " + "\"" + tableName + "\" " + "удалены.");
+                System.out.println("Все данные из таблицы " + "\"" + tableName + "\" " + "удалены");
             } catch (SQLException e) {
                 System.out.println("Проблема с запросом: ");
                 e.printStackTrace();
@@ -148,7 +148,7 @@ public class DatabaseQueries {
                 preparedStatement = BaseConnector.getInstance().getConnection().prepareStatement("delete from " + tableName + " where id = ?");
                 preparedStatement.setInt(1, number);
                 preparedStatement.execute();
-                System.out.println("Строка из таблицы" + "\"" + tableName + "\"" + "," + " " + "где id = " + "\"" + tableName + "\" " + "-" + "удалена.");
+                System.out.println("Строка из таблицы" + " \"" + tableName + "\"" + "," + " " + "где id = " + "\"" + number + "\" " + "-" + " удалена.");
             } catch (SQLException e) {
                 System.out.println("Проблема с запросом: ");
                 e.printStackTrace();
@@ -253,7 +253,7 @@ public class DatabaseQueries {
     //------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------------Вывод id---------------------------------------------------------
 
-    public void getId(String tableName, String field, String value) {
+    public int getId(String tableName, String field, String value) {
         int res = -1;
         if (!BaseConnector.getInstance().doesConnectionExist()) {
             System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
@@ -271,12 +271,13 @@ public class DatabaseQueries {
                 resultSet = statement.executeQuery("select " + tableName + ".id from " + tableName + " where " + tableName + "." + field + "= " + "\'" + value + "\'");
                 while (resultSet.next())
                     res = resultSet.getInt(1);
-                System.out.println("ID получен из - " + "faculties");
+                System.out.println("Id получен из - " + tableName);
             } catch (SQLException e) {
                 System.out.println("Не удалось выполнить запрос: ");
                 e.printStackTrace();
             }
         }
+        return res;
     }
 
 }

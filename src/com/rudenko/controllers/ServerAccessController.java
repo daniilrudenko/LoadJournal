@@ -6,13 +6,18 @@ import com.rudenko.views.PasswordTextField;
 import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ServerAccessController  {
@@ -139,7 +144,20 @@ public class ServerAccessController  {
                 databaseQueries.createTable("plan",QueriesData.CREATE_PLAN);
                 fileWorkerDatabaseFlag.createFile();
             }
+            messageDialogMaker.show();
             //-------------------------------------------
+            //-------------------------------------------
+            Stage newStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../fxml/AdministratorWorkFlow.fxml"));
+            Parent root = loader.load();
+            newStage.setTitle("Панель администратора");
+            Scene scene = new Scene(root,699,500);
+            newStage.setScene(scene);
+            newStage.setResizable(false);
+            AdministratorWorkflowController controller = loader.getController();
+            newStage.setOnCloseRequest(controller.getCloseEventHandler());
+            newStage.show();
             //-------------------------------------------
             Node  source = (Node)  actionEvent.getSource();
             Stage stage  = (Stage) source.getScene().getWindow();
@@ -149,7 +167,7 @@ public class ServerAccessController  {
                 messageDialogMaker = new MessageDialogMaker(
                         "Внимание", null,
                         "Не удалось подключиться к серверу.\n" +
-                                "Проверьте соеденение с интернетом, корректность введенных данных данных" +
+                                "Проверьте соеденение с интернетом, корректность введенных данных" +
                                 " или конфигурацию сервера.", Alert.AlertType.ERROR);
                 messageDialogMaker.show();
         }
