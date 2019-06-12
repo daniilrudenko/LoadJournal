@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 
 public class MessageDialogMaker {
 
+    public Alert getAlertObj() {
+        return alertObj;
+    }
+
     private Alert alertObj;   // Ссылка на объект класса "Alert"
     //-------------------------------------------
 

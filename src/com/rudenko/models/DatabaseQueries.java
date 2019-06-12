@@ -3,6 +3,7 @@ package com.rudenko.models;
 import com.rudenko.controllers.ServerAccessController;
 import sun.tools.jconsole.Tab;
 
+import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 
@@ -76,7 +77,7 @@ public class DatabaseQueries {
     //------------------------------------------------------------------------------------------------------------------
     //---------------------------------------------Создание таблиц------------------------------------------------------
 
-    public void createTable(String tableName, String query){
+    public void createTable(String tableName, String query) {
         if (!BaseConnector.getInstance().doesConnectionExist()) {
             System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
         } else {
@@ -162,11 +163,11 @@ public class DatabaseQueries {
     //-------------------------------------------Вставка в таблицы------------------------------------------------------
 
 
-    public void insertTable(Map<String,String> map , String tableName) {
+    public void insertTable(Map<String, String> map, String tableName) {
 
 
         Set<String> listKeys = map.keySet();
-        Collection<String> listValues= map.values();
+        Collection<String> listValues = map.values();
         String fieldName = "(";
         String fieldValues = "(\'";
         List<String> keys = new ArrayList<>(listKeys);
@@ -174,8 +175,8 @@ public class DatabaseQueries {
         Collections.reverse(keys);
         Collections.reverse(values);
         //---------------------------------------------------
-        for(int i = 0; i< keys.size(); i++){
-            if(i + 1 == keys.size()){
+        for (int i = 0; i < keys.size(); i++) {
+            if (i + 1 == keys.size()) {
                 fieldName = fieldName.concat(keys.get(i) + ")");
                 fieldValues = fieldValues.concat(values.get(i) + "\')");
                 break;
@@ -199,8 +200,8 @@ public class DatabaseQueries {
                 }
             }
             try {
-                statement.executeUpdate("insert into " + tableName + " " + fieldName  + " values " +
-                      fieldValues);
+                statement.executeUpdate("insert into " + tableName + " " + fieldName + " values " +
+                        fieldValues);
                 System.out.println("Вставка данных в таблицу " + "\"" + tableName + "\" " + " прошла успешно");
             } catch (SQLException e) {
                 System.out.println("Не удалось выполнить запрос: ");
@@ -213,9 +214,68 @@ public class DatabaseQueries {
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------------Вывод данных из таблиц----------------------------------------------------
 
-    public List<String> getData(String tableName) {
 
-        List<String> listTimes = new ArrayList<>();
+    public ResultSet getDataFromDepartments() {
+
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                resultSet = statement.executeQuery("select faculties.name, departments.name from departments inner join faculties on departments.faculties_id = faculties.id");
+                System.out.println("Данные из таблицы departments" + " получены");
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
+
+    public ResultSet getDataFromTeachers() {
+
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                resultSet = statement.executeQuery("SELECT departments.name, teachers.name, teachers.surname,teachers.patronymic, teachers.login, teachers.password FROM teachers  \n" +
+                                "LEFT JOIN teachers_plus_departments tpd ON (teachers.id = tpd.teachers_id) \n" +
+                                "LEFT JOIN departments  ON (departments.id = tpd.departments_id)\n" +
+                                "WHERE departments.id = departments_id");
+                System.out.println("Данные из таблицы departments" + " получены");
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
+
+
+    public ResultSet getData(String tableName) {
+
+        List<String> list = new ArrayList<>();
 
         if (!BaseConnector.getInstance().doesConnectionExist()) {
             System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
@@ -236,22 +296,43 @@ public class DatabaseQueries {
                 System.out.println("Не удалось получить данные из таблицы: ");
                 e.printStackTrace();
             }
-            while (true) {
+        }
+        return resultSet;
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //-------------------------------------------------Вывод по id---------------------------------------------------------
+
+    public int getDataById(String tableName, String field, String value) {
+        int res = -1;
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
                 try {
-                    if (!resultSet.next()) break;
-                    listTimes.add(resultSet.getString(2));
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
                 } catch (SQLException e) {
-                    System.out.println("Ошибка при считывании данных: ");
+                    System.out.println("Не удалось создать запрос: ");
                     e.printStackTrace();
                 }
+
+            }
+            try {
+                resultSet = statement.executeQuery("select " + tableName + "." + field +" from " + tableName + " where " + tableName + ".id"  + "= " + "\'" + value + "\'");
+                while (resultSet.next())
+                    res = resultSet.getInt(1);
+                System.out.println("Значение получено из - " + tableName);
+            } catch (SQLException e) {
+                System.out.println("Не удалось выполнить запрос: ");
+                e.printStackTrace();
             }
         }
-        return listTimes;
+        return res;
     }
 
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-    //-------------------------------------------------Вывод id---------------------------------------------------------
+    //-------------------------------------------------Вывод id строки--------------------------------------------------
 
     public int getId(String tableName, String field, String value) {
         int res = -1;
@@ -271,7 +352,7 @@ public class DatabaseQueries {
                 resultSet = statement.executeQuery("select " + tableName + ".id from " + tableName + " where " + tableName + "." + field + "= " + "\'" + value + "\'");
                 while (resultSet.next())
                     res = resultSet.getInt(1);
-                System.out.println("Id получен из - " + tableName);
+                System.out.println("id получен из - " + tableName);
             } catch (SQLException e) {
                 System.out.println("Не удалось выполнить запрос: ");
                 e.printStackTrace();
@@ -279,5 +360,37 @@ public class DatabaseQueries {
         }
         return res;
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //-----------------------------------------------Обновление---------------------------------------------------------
 
+    public void updateColumnRow(String tableName, String columnName,String oldValue,String newValue ){
+
+
+
+
+        String query = "update " + tableName + " set " +  columnName +  " ="
+                + " \'" +  newValue  + "\'" + " where" +  " " + columnName + " = " + "\'" + oldValue + "\'";
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                statement.executeUpdate(query);
+                System.out.println("Данные в" + " \"" + tableName + "\" " + "изменены.");
+            } catch (SQLException e) {
+                System.out.println("Не удалось выполнить запрос");
+                e.printStackTrace();
+            }
+        }
+    }
 }
+

@@ -7,7 +7,7 @@
 
 <?import com.rudenko.views.SpacesBannedTextField?>
 <?import com.rudenko.views.PasswordTextField?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.ServerAccessController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="452.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.ServerAccessController">
    <children>
       <HBox prefHeight="55.0" prefWidth="200.0">
          <VBox.margin>
@@ -56,17 +56,17 @@
       </HBox>
       <HBox prefHeight="55.0" prefWidth="200.0">
          <VBox.margin>
-            <Insets top="30.0" />
+            <Insets top="10.0" />
          </VBox.margin>
          <children>
             <Button cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#onClose" prefHeight="25.0" prefWidth="102.0" text="Выход">
                <HBox.margin>
-                  <Insets left="102.0" top="20.0" />
+                  <Insets left="112.0" top="27.0" />
                </HBox.margin>
             </Button>
             <Button defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#onAccept" prefHeight="25.0" prefWidth="102.0" text="Подтвердить">
                <HBox.margin>
-                  <Insets left="40.0" top="20.0" />
+                  <Insets left="30" top="27.0" />
                </HBox.margin>
             </Button>
          </children>

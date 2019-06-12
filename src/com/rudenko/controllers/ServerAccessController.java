@@ -11,17 +11,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 public class ServerAccessController  {
-
 
     @FXML
     private SpacesBannedTextField textField_URL;        // Поле ввода URL
@@ -35,19 +34,20 @@ public class ServerAccessController  {
     private FileWorker fileWorkerUserData;
     private FileWorker fileWorkerDatabaseFlag;
     //-------------------------------------------------------------
-    public static boolean databaseFlag = false;
-    DatabaseQueries databaseQueries ;
+    private boolean databaseFlag = false;
+    private DatabaseQueries databaseQueries ;
+    private FXMLLoader loader;
+    private Parent parent;
 
 
     //Инициализация
 
 
-    public void initialize(){
+    public void initialize() throws IOException {
 
-
+        // Проверка на существование базы данных
         fileWorkerDatabaseFlag = new FileWorker("DatabaseFlag.txt");
-        if(!fileWorkerDatabaseFlag.doesFileExist()){ databaseFlag = false; }
-        else databaseFlag = true;
+        databaseFlag = fileWorkerDatabaseFlag.doesFileExist();
         //-------------------------------------------------
         // Обращение к файлу. Если не существует - создание. Далее - чтение
         List<String> serverUserData = new ArrayList<>();
@@ -97,9 +97,9 @@ public class ServerAccessController  {
         //-------------------------------
         MessageDialogMaker messageDialogMaker = null;
         //-------------------------------------------
-        resultForTextFieldIsEmpty = ControlOpportunitiesImprover.textFieldIsEmpty(textField_URL, textField_User,textField_Password);
+        resultForTextFieldIsEmpty = ControlsOpportunitiesImprover.textFieldIsEmpty(textField_URL, textField_User,textField_Password);
         //-------------------------------------------
-        if(resultForTextFieldIsEmpty.equals(ControlOpportunitiesImprover.TRUE)){
+        if(resultForTextFieldIsEmpty.equals(ControlsOpportunitiesImprover.TRUE)){
              messageDialogMaker = new MessageDialogMaker(
                     "Внимание", null,
                     "Пожалуйста, заполните все поля.", Alert.AlertType.WARNING);
@@ -147,17 +147,20 @@ public class ServerAccessController  {
             messageDialogMaker.show();
             //-------------------------------------------
             //-------------------------------------------
-            Stage newStage = new Stage();
+
+
+            Stage stageHelper = new Stage();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../fxml/AdministratorWorkFlow.fxml"));
             Parent root = loader.load();
-            newStage.setTitle("Панель администратора");
+            stageHelper.setTitle("Панель администратора");
             Scene scene = new Scene(root,699,500);
-            newStage.setScene(scene);
-            newStage.setResizable(false);
+            stageHelper.setScene(scene);
+            stageHelper.setResizable(false);
+            stageHelper.initModality(Modality.WINDOW_MODAL);
             AdministratorWorkflowController controller = loader.getController();
-            newStage.setOnCloseRequest(controller.getCloseEventHandler());
-            newStage.show();
+            stageHelper.setOnCloseRequest(controller.getCloseEventHandler());
+            stageHelper.show();
             //-------------------------------------------
             Node  source = (Node)  actionEvent.getSource();
             Stage stage  = (Stage) source.getScene().getWindow();

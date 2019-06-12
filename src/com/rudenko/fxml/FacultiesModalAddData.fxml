@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+
 <?import com.rudenko.views.SpacesBannedTextField?>
+<?import com.rudenko.views.LimitedTextField?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.FacultiesModalAddDataController">
    <children>
-      <HBox prefHeight="58.5" prefWidth="347.0">
+      <HBox prefHeight="50.0" prefWidth="200.0">
          <children>
             <Label text="Название: ">
                <HBox.margin>
                   <Insets left="17.0" top="23.25" />
                </HBox.margin>
             </Label>
-            <SpacesBannedTextField  fx:id="facultiesModalAddTextField" prefHeight="27.0" prefWidth="218.0">
+            <LimitedTextField fx:id="facultiesModalAddTextField" prefHeight="27.0" prefWidth="218.0">
                <HBox.margin>
                   <Insets left="20.0" top="18.0" />
                </HBox.margin>
-            </SpacesBannedTextField>
+            </LimitedTextField>
          </children>
       </HBox>
       <HBox prefHeight="58.5" prefWidth="200.0">

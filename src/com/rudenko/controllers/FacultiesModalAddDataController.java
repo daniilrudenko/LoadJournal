@@ -1,8 +1,8 @@
 package com.rudenko.controllers;
 
-import com.rudenko.models.ControlOpportunitiesImprover;
+import com.rudenko.models.ControlsOpportunitiesImprover;
+import com.rudenko.views.LimitedTextField;
 import com.rudenko.views.MessageDialogMaker;
-import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,7 +13,7 @@ public class FacultiesModalAddDataController {
 
 
     @FXML
-    private SpacesBannedTextField facultiesModalAddTextField;
+    private LimitedTextField facultiesModalAddTextField;
 
     @FXML
     public Button facultiesModalAddButtonOkay;
@@ -21,42 +21,48 @@ public class FacultiesModalAddDataController {
     @FXML
     public Button facultiesModalAddButtonCancel;
 
+    //--------------------------------------------------
     private MessageDialogMaker messageDialogMaker = null;
-
     private FacultiesModalController.FacultiesData facultiesData;
+    //--------------------------------------------------
 
+    public void initialize(){
+        facultiesModalAddTextField.setMaxLength(60);
+    }
+    //--------------------------------------------------
 
+    public FacultiesModalController.FacultiesData getFacultiesData(){
+        return facultiesData;
+    }
+    //--------------------------------------------------
 
     public void onButtonPressed(ActionEvent actionEvent) {
 
         Object source = actionEvent.getSource();
 
-        if(!(source instanceof Button)){
-            return;
-        }
+        if(!(source instanceof Button)){ return; }
 
         Button clickedButton = (Button) source;
 
         switch (clickedButton.getId()){
             case "facultiesModalAddButtonOkay":
-                String result = ControlOpportunitiesImprover.textFieldIsEmpty(facultiesModalAddTextField);
+                String result = ControlsOpportunitiesImprover.textFieldIsEmpty(facultiesModalAddTextField);
 
-                if(result.equals(ControlOpportunitiesImprover.TRUE)) {
+                if(result.equals(ControlsOpportunitiesImprover.TRUE)) {
                     messageDialogMaker = new MessageDialogMaker(
                             "Внимание", null,
-                            "Пожалуйста, заполните поле.", Alert.AlertType.WARNING);
+                            "Пожалуйста, заполните пустое поле", Alert.AlertType.WARNING);
                     messageDialogMaker.show();
+                    return;
                 }
                 else {
                     facultiesData = new FacultiesModalController.FacultiesData(facultiesModalAddTextField.getText());
-                    FacultiesModalController.buffer = facultiesData.getName();
                     Stage stage = (Stage) ((Button) source).getScene().getWindow();
                     stage.close();
                     break;
                 }
             case "facultiesModalAddButtonCancel":
                 Stage stage = (Stage) ((Button) source).getScene().getWindow();
-                FacultiesModalController.buffer = "";
                 stage.close();
                 break;
         }

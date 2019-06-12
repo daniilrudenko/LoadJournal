@@ -1,6 +1,8 @@
 package com.rudenko.views;
 
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class SpacesBannedTextField extends LimitedTextField {
 

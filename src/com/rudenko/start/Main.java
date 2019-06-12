@@ -1,23 +1,16 @@
 package com.rudenko.start;
 
 import com.rudenko.controllers.ServerAccessController;
-import com.rudenko.models.DatabaseQueries;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.Map;
 
 
 public class Main extends Application {
 
-    private MenuBar menuBar;
-    private Menu help;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -27,12 +20,10 @@ public class Main extends Application {
             loader.setLocation(getClass().getResource("../fxml/ServerAccess.fxml"));
             Parent root = loader.load();
             primaryStage.setTitle("Вход");
-            Scene scene = new Scene(root,452,294);
+            Scene scene = new Scene(root,452,284);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
-            DatabaseQueries databaseQueries = new DatabaseQueries();
             primaryStage.show();
-
             //-------------------------------------------------------------
             // Обработка клика по кнопки закрытия на заголовке окна
             ServerAccessController controller = loader.getController();
