@@ -44,6 +44,7 @@ public class FacultiesModalController {
     private FacultiesData selectedItem;
     private ResultSet resultSet;
     private FacultiesModalAddDataController facultiesModalAddDataController;
+    private FacultiesData facultiesData;
     //------------------------------------------------------------
 
 
@@ -113,9 +114,11 @@ public class FacultiesModalController {
                     //-------------------------------------------------------------
                     stageHelper.showAndWait();
                 if(!stageHelper.isShowing()) {
-                    addData(facultiesModalAddDataController.getFacultiesData());
-                    System.out.println(facultiesModalAddDataController.getFacultiesData().getName());
-                    tableFaculties.refresh();
+                    facultiesData = facultiesModalAddDataController.getFacultiesData();
+                    if(facultiesData != null) {
+                        addData(facultiesData);
+
+                    }
                 }
                 break;
             //---------------------------------------------------------------------

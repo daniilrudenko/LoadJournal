@@ -22,16 +22,16 @@
       </HBox>
       <HBox prefHeight="125.0" prefWidth="200.0">
          <children>
-            <Button fx:id="btnPlan" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Типы плана" />
-            <Button fx:id="btnLoad" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Виды нагрузки" />
-            <Button fx:id="btnRings" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Расписание звонков" />
+            <Button fx:id="btnTeachersPlusDepartments" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Преподаватели и кафедры" />
+            <Button fx:id="btnGroupsPlusDepartments" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Группы и кафедры" />
+            <Button fx:id="btnSubjectsPlusDepartments" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Предметы и кафедры" />
          </children>
       </HBox>
       <HBox prefHeight="125.0" prefWidth="200.0">
          <children>
+            <Button fx:id="btnLoad" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Виды нагрузки" />
             <Button fx:id="btnTimeTable" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Создать расписание" />
             <Button fx:id="btnExit" focusTraversable="false" mnemonicParsing="false" onAction="#addData" prefHeight="125.0" prefWidth="233.0" text="Выход" />
-            <Button focusTraversable="false" mnemonicParsing="false" prefHeight="125.0" prefWidth="233.0" text="Помощь" />
          </children>
       </HBox>
    </children>

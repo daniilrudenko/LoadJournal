@@ -19,20 +19,15 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class TeachersModalController {
 
 
-    private Parent parent;
-    private FXMLLoader loader;
 
     @FXML
     public TableView<TeachersData>   tableTeachers;
 
-    @FXML
-    public TableColumn<TeachersData,String> departmentColumn;
 
     @FXML
     public TableColumn<TeachersData,String> nameColumn;
@@ -63,6 +58,7 @@ public class TeachersModalController {
     private TeachersData selectedItem;
     private ResultSet resultSet;
     private TeachersModalAddDataController modalAddDataController;
+    private TeachersData teachersData;
 
 
     public void initialize() throws IOException {
@@ -71,19 +67,16 @@ public class TeachersModalController {
 
         teachersObservableList = FXCollections.observableArrayList();
         databaseQueries = new DatabaseQueries();
-        departmentColumn.setCellValueFactory(new PropertyValueFactory<>("departmentName"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         surnameColumn.setCellValueFactory(new PropertyValueFactory<>("surname"));
         patronymicColumn.setCellValueFactory(new PropertyValueFactory<>("patronymic"));
         loginColumn.setCellValueFactory(new PropertyValueFactory<>("login"));
         passwordColumn.setCellValueFactory(new PropertyValueFactory<>("password"));
-
-        resultSet = databaseQueries.getDataFromTeachers();
+        resultSet = databaseQueries.getData("teachers");
         while (true) {
             try {
                 if (!resultSet.next()) break;
-                teachersObservableList.add(new TeachersData(resultSet.getString(1),
-                        resultSet.getString(2),
+                teachersObservableList.add(new TeachersData(resultSet.getString(2),
                         resultSet.getString(3),
                         resultSet.getString(4),
                         resultSet.getString(5),
@@ -99,7 +92,6 @@ public class TeachersModalController {
 
 
     public void addData(TeachersData teachersData){
-        int idDepartment = databaseQueries.getId("departments","name",teachersData.getDepartmentName());
         Map<String,String> map = new HashMap<>();
         map.put("name",teachersData.getName());
         map.put("surname",teachersData.getSurname());
@@ -107,20 +99,15 @@ public class TeachersModalController {
         map.put("login",teachersData.getLogin());
         map.put("password",teachersData.getPassword());
         databaseQueries.insertTable(map,"teachers");
-        int idTeacher = databaseQueries.getId("teachers","password",teachersData.getPassword());
-        map = new HashMap<>();
-        map.put("teachers_id",String.valueOf(idTeacher));
-        map.put("departments_id",String.valueOf(idDepartment));
-        databaseQueries.insertTable(map,"teachers_plus_departments");
+        databaseQueries.createUserTeacher(teachersData.getLogin(),teachersData.getPassword());
         teachersObservableList.add(teachersData);
         tableTeachers.refresh();
     }
 
     public void deleteData(TeachersData data, String value){
-        int id = databaseQueries.getId("teachers","name",value);
-
+        int id = databaseQueries.getId("teachers","login",value);
         databaseQueries.deleteRow("teachers",id);
-        databaseQueries.deleteRow("teachers_plus_departments",id);
+        databaseQueries.deleteUser(data.getLogin());
         teachersObservableList.remove(data);
         tableTeachers.getItems().remove(data);
     }
@@ -146,20 +133,25 @@ public class TeachersModalController {
                 loader.setLocation(getClass().getResource("../fxml/TeachersModalAddData.fxml"));
                 Parent root = loader.load();
                 stageHelper.setTitle("Добавить данные в таблицу");
-                Scene scene = new Scene(root,404,434);
+                Scene scene = new Scene(root,404,358);
                 stageHelper.setScene(scene);
                 stageHelper.setResizable(false);
                 stageHelper.initModality(Modality.WINDOW_MODAL);
                 stageHelper.initOwner(((Button) source).getScene().getWindow());
                 modalAddDataController = loader.getController();
                 stageHelper.showAndWait();
-                if (!stageHelper.isShowing())
-                    addData(modalAddDataController.getTeachersData());
+                //------------------------------------------------------------------------------------------------------
+                if (!stageHelper.isShowing()) {
+                    teachersData = modalAddDataController.getTeachersData();
+                    if(teachersData!=null)
+                    addData(teachersData);
+                }
                 break;
+                //------------------------------------------------------------------------------------------------------
             case "btnDeleteTeachers":
                 selectedItem = tableTeachers.getSelectionModel().getSelectedItem();
                 if(selectedItem != null) {
-                    deleteData(selectedItem, selectedItem.getDepartmentName());
+                    deleteData(selectedItem, selectedItem.getLogin());
                 }
 
                 break;
@@ -176,12 +168,6 @@ public class TeachersModalController {
     protected static class TeachersData {
 
 
-        public String getDepartmentName() {
-            return departmentName;
-        }
-
-        private String departmentName;
-
         private String name;
 
         private String surname;
@@ -193,8 +179,7 @@ public class TeachersModalController {
         private String password;
 
 
-        public  TeachersData(String departmentName, String name, String surname, String patronymic, String login, String password) {
-           this.departmentName = departmentName;
+        public  TeachersData(String name, String surname, String patronymic, String login, String password) {
            this.name = name;
            this.surname = surname;
            this.patronymic = patronymic;
@@ -206,9 +191,6 @@ public class TeachersModalController {
 
         }
 
-        public void setDepartmentName(String departmentName) {
-            this.departmentName = departmentName;
-        }
 
         public String getName() {
             return name;
@@ -238,7 +220,7 @@ public class TeachersModalController {
             return login;
         }
 
-        public void setLogn(String login) {
+        public void setLogin(String login) {
             this.login = login;
         }
 

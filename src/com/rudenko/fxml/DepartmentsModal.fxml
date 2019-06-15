@@ -5,14 +5,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.DepartmentsModalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.DepartmentsModalController">
     <children>
-        <HBox prefHeight="200.0" prefWidth="575.0">
+        <HBox prefHeight="200.0" prefWidth="500.0">
             <children>
-                <TableView fx:id="tableDepartments" focusTraversable="false" prefHeight="150.0" prefWidth="575.0">
+                <TableView fx:id="tableDepartments" focusTraversable="false" prefHeight="150.0" prefWidth="500.0">
                     <columns>
-                  <TableColumn fx:id="tableDepartmentsColumnFaculty" prefWidth="287.5" text="Факультет" />
-                        <TableColumn fx:id="tableDepartmentsColumnName" editable="false" prefWidth="287.5" resizable="false" sortable="false" text="Название кафедры" />
+                  <TableColumn fx:id="tableDepartmentsColumnFaculty" prefWidth="250.0" text="Факультет" />
+                        <TableColumn fx:id="tableDepartmentsColumnName" editable="false" prefWidth="250.0" resizable="false" sortable="false" text="Название кафедры" />
                     </columns>
                 </TableView>
             </children>
@@ -21,7 +21,7 @@
             <children>
                 <Button fx:id="btnAddDepartments" defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#tableDepartmentsButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Добавить">
                     <HBox.margin>
-                        <Insets left="145.0" right="15.0" top="40.0" />
+                        <Insets left="117.0" right="15.0" top="40.0" />
                     </HBox.margin>
                 </Button>
                 <Button fx:id="btnDeleteDepartments" focusTraversable="false" mnemonicParsing="false" onAction="#tableDepartmentsButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Удалить">

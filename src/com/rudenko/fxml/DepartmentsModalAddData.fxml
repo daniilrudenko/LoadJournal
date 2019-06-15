@@ -9,14 +9,14 @@
     <children>
         <HBox prefHeight="50.0" prefWidth="200.0">
             <children>
-                <Label text="Кафедра:">
+                <Label text="Факультет:">
                     <HBox.margin>
                         <Insets left="17.0" top="30.0" />
                     </HBox.margin>
                 </Label>
                 <ComboBox fx:id="departmentsModalAddCombobox" prefWidth="218.0">
                     <HBox.margin>
-                        <Insets left="30.0" top="25.0" />
+                        <Insets left="18.0" top="25.0" />
                     </HBox.margin>
                 </ComboBox>
             </children>

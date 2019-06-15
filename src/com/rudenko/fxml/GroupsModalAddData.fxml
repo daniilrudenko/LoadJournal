@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.GroupsModalAddDataController">
+    <children>
+        <HBox prefHeight="50.0" prefWidth="200.0">
+            <children>
+                <Label text="Форма обучения:">
+                    <HBox.margin>
+                        <Insets left="17.0" top="25.0" />
+                    </HBox.margin>
+                </Label>
+            <ComboBox fx:id="groupsComboBoxForm" prefWidth="184.0">
+               <HBox.margin>
+                  <Insets left="17.0" top="20.0" />
+               </HBox.margin>
+            </ComboBox>
+            </children>
+        </HBox>
+        <HBox prefHeight="50.0" prefWidth="200.0">
+            <children>
+                <Label text="Год поступления:">
+                    <HBox.margin>
+                        <Insets left="17.0" top="25.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="groupsModalYearTextField" prefHeight="27.0" prefWidth="184.0">
+                    <HBox.margin>
+                        <Insets left="17.0" top="20.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+        </HBox>
+        <HBox prefHeight="50.0" prefWidth="200.0">
+            <children>
+                <Label text="Поток:">
+                    <HBox.margin>
+                        <Insets left="17.0" top="25.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="groupsModalFlowTextField" prefHeight="27.0" prefWidth="184.0">
+                    <HBox.margin>
+                        <Insets left="87.0" top="20.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+        </HBox>
+        <HBox prefHeight="50.0" prefWidth="200.0">
+            <children>
+                <Label text="Название:">
+                    <HBox.margin>
+                        <Insets left="17.0" top="25.0" />
+                    </HBox.margin>
+                </Label>
+                <TextField fx:id="groupsModalNameTextField" prefHeight="27.0" prefWidth="184.0">
+                    <HBox.margin>
+                        <Insets left="64.0" top="20.0" />
+                    </HBox.margin>
+                </TextField>
+            </children>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </HBox>
+        <HBox prefHeight="58.5" prefWidth="200.0">
+            <children>
+                <Button fx:id="groupsModalAddButtonOkay" defaultButton="true" mnemonicParsing="false" onAction="#onButtonPressed" prefHeight="27.0" prefWidth="68.0" text="Ок">
+                    <HBox.margin>
+                        <Insets left="110.0" top="15.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="groupsModalAddButtonCancel" cancelButton="true" mnemonicParsing="false" onAction="#onButtonPressed" prefHeight="27.0" prefWidth="68.0" text="Отмена">
+                    <HBox.margin>
+                        <Insets left="10.0" top="15.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+            <VBox.margin>
+                <Insets top="25.0" />
+            </VBox.margin>
+        </HBox>
+    </children>
+</VBox>

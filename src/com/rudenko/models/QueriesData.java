@@ -31,26 +31,28 @@ public class QueriesData {
 
     public static final String CREATE_DEPARTMENTS = "create table if not exists departments(" +
             "id serial primary key, " +
-            "faculties_id integer references faculties(id)," +
+            "faculties_id integer references faculties(id) on delete cascade," +
             "name character varying (100)" +
             ")";
 
     public static final String CREATE_TEACHERS_PLUS_DEPARTMENTS = "create table if not exists teachers_plus_departments(" +
             "id serial primary key, " +
-            "teachers_id integer references teachers(id)," +
-            " departments_id integer references departments(id)"+
+            "teachers_id integer references teachers(id) on delete cascade, " +
+            "departments_id integer references departments(id) on delete cascade"+
             ")";
 
     public static final String CREATE_GROUPS = "create table if not exists groups(" +
             "id serial primary key, " +
             "name character varying (100)," +
+            "flow character varying (100)," +
             "form character varying (100)," +
             "year character varying (100)" +
             ")";
 
     public static final String CREATE_GROUPS_PLUS_DEPARTMENTS = "create table if not exists groups_plus_departments(" +
             "id serial primary key, " +
-            "groups_id integer references departments(id)" +
+            "groups_id integer references groups(id) on delete cascade," +
+            "departments_id integer references departments(id) on delete cascade"+
             ")";
 
     public static final String CREATE_SUBJECTS = "create table if not exists subjects(" +
@@ -60,7 +62,8 @@ public class QueriesData {
 
     public static final String CREATE_SUBJECTS_PLUS_DEPARTMENTS = "create table if not exists subjects_plus_departments(" +
             "id serial primary key, " +
-            "subjects_id integer references departments(id)" +
+            "subjects_id integer references subjects(id) on delete cascade," +
+            "departments_id integer references departments(id) on delete cascade"+
             ")";
 
 
@@ -74,10 +77,5 @@ public class QueriesData {
             "name character varying (100)" +
             ")";
 
-    public static final String CREATE_RINGS = "create table if not exists rings(" +
-            "id serial primary key, " +
-            "number character varying (100)," +
-            "begin character varying(100)," +
-            "finish character varying(100)" +
-            ")";
+
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.GroupsModalController">
+    <children>
+        <HBox prefHeight="200.0" prefWidth="500.0">
+            <children>
+                <TableView fx:id="tableGroups" focusTraversable="false" prefHeight="148.0" prefWidth="500.0">
+                    <columns>
+                        <TableColumn fx:id="groupNameColumn" prefWidth="125.0" text="Название группы" />
+                        <TableColumn fx:id="groupFlowColumn" editable="false" prefWidth="125.0" resizable="false" sortable="false" text="Поток" />
+                        <TableColumn fx:id="groupFormOfStudyingColumn" prefWidth="125.0" text="Форма обучения" />
+                        <TableColumn fx:id="groupYearColumn" prefWidth="125.0" text="Год потсупления" />
+                    </columns>
+                </TableView>
+            </children>
+        </HBox>
+        <HBox prefHeight="150.0" prefWidth="500.0">
+            <children>
+                <Button fx:id="btnAddGroups" defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#groupsButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Добавить">
+                    <HBox.margin>
+                        <Insets left="117.0" right="15.0" top="40.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="btnDeleteGroups" focusTraversable="false" mnemonicParsing="false" onAction="#groupsButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Удалить">
+                    <HBox.margin>
+                        <Insets right="15.0" top="40.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="btnGroupsCancel" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#groupsButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Отмена">
+                    <HBox.margin>
+                        <Insets right="15.0" top="40.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</VBox>

@@ -36,9 +36,6 @@ public class ServerAccessController  {
     //-------------------------------------------------------------
     private boolean databaseFlag = false;
     private DatabaseQueries databaseQueries ;
-    private FXMLLoader loader;
-    private Parent parent;
-
 
     //Инициализация
 
@@ -56,8 +53,7 @@ public class ServerAccessController  {
         serverUserData = fileWorkerUserData.fileRead();
         //-------------------------------------------------
         // Заполнение данными из файла если данные уже существовали
-        
-        if(serverUserData.size() == 2) {
+        if(serverUserData.size() == 2 || serverUserData.size() == 3) {
         textField_URL.setText(serverUserData.get(0));
         textField_User.setText(serverUserData.get(1));
         }
@@ -86,7 +82,6 @@ public class ServerAccessController  {
     private void onAccept(ActionEvent actionEvent) throws IOException {
 
         boolean resultConnection = false;
-        boolean resultConnectionForCreatingDB = false;
         //-------------------------------
         String resultForTextFieldIsEmpty;
         //-------------------------------
@@ -134,12 +129,13 @@ public class ServerAccessController  {
                 databaseQueries.createTable("departments",QueriesData.CREATE_DEPARTMENTS);
                 databaseQueries.createTable("faculties",QueriesData.CREATE_FACULTIES);
                 databaseQueries.createTable("teachers",QueriesData.CREATE_TEACHERS);
+                databaseQueries.createTable("administrators",QueriesData.CREATE_ADMINISTRATORS);
                 databaseQueries.createTable("teachers_plus_departments",QueriesData.CREATE_TEACHERS_PLUS_DEPARTMENTS);
                 databaseQueries.createTable("groups",QueriesData.CREATE_GROUPS);
                 databaseQueries.createTable("groups_plus_departments",QueriesData.CREATE_GROUPS_PLUS_DEPARTMENTS);
                 databaseQueries.createTable("subjects",QueriesData.CREATE_SUBJECTS);
                 databaseQueries.createTable("subjects_plus_departments",QueriesData.CREATE_SUBJECTS_PLUS_DEPARTMENTS);
-                databaseQueries.createTable("rings",QueriesData.CREATE_RINGS);
+
                 databaseQueries.createTable("load",QueriesData.CREATE_LOAD);
                 databaseQueries.createTable("plan",QueriesData.CREATE_PLAN);
                 fileWorkerDatabaseFlag.createFile();
@@ -147,8 +143,6 @@ public class ServerAccessController  {
             messageDialogMaker.show();
             //-------------------------------------------
             //-------------------------------------------
-
-
             Stage stageHelper = new Stage();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../fxml/AdministratorWorkFlow.fxml"));

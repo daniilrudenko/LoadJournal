@@ -22,8 +22,7 @@ import java.util.Map;
 
 public class DepartmentsModalController {
 
-    public static String bufferForResultDepartments = "";
-    public static String comboBoxRes ="";
+
     private ObservableList<DepartmentsData> departmentsObservableList;
     private DatabaseQueries databaseQueries;
     private DepartmentsData selectedItem;
@@ -52,10 +51,12 @@ public class DepartmentsModalController {
 
     private ResultSet resultSet;
 
+    private DepartmentsData departmentsData;
 
 
 
-    public void initialize() throws IOException {
+
+    public void initialize() {
 
 
         departmentsObservableList = FXCollections.observableArrayList();
@@ -122,7 +123,9 @@ public class DepartmentsModalController {
                 stageHelper.showAndWait();
                 //-----------------------------------
                 if (!stageHelper.isShowing()) {
-                    addData(departmentsModalAddDataController.getDepartmentsData());
+                    departmentsData = departmentsModalAddDataController.getDepartmentsData();
+                    if(departmentsData!= null)
+                    addData(departmentsData);
                 }
                 //-----------------------------------
                 break;
@@ -146,16 +149,16 @@ public class DepartmentsModalController {
 
         private String facultyName;
 
+        public DepartmentsData(){
+
+        }
+
         public String getName() {
             return departmentName;
         }
 
         public void setName(String name) {
             departmentName = name;
-        }
-
-        public DepartmentsData(String facultyName){
-            this.facultyName = facultyName;
         }
 
         public DepartmentsData(String facultyName, String name){

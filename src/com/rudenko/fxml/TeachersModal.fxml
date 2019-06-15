@@ -5,27 +5,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.TeachersModalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.TeachersModalController">
     <children>
-        <HBox prefHeight="200.0" prefWidth="750.0">
+        <HBox prefHeight="200.0" prefWidth="600.0">
             <children>
-                <TableView fx:id="tableTeachers" focusTraversable="false" prefHeight="148.0" prefWidth="750.0">
+                <TableView fx:id="tableTeachers" focusTraversable="false" prefHeight="148.0" prefWidth="600.0">
                     <columns>
-                  <TableColumn fx:id="departmentColumn" prefWidth="125.0" text="Кафедра" />
-                        <TableColumn fx:id="nameColumn" prefWidth="125.0" text="Имя" />
-                        <TableColumn fx:id="surnameColumn" editable="false" prefWidth="125.0" resizable="false" sortable="false" text="Фамилия" />
-                  <TableColumn fx:id="patronymicColumn" prefWidth="125.0" text="Отчество" />
-                  <TableColumn fx:id="loginColumn" prefWidth="125.0" text="Логин" />
-                  <TableColumn fx:id="passwordColumn" prefWidth="125.0" text="Пароль" />
+                        <TableColumn fx:id="nameColumn" prefWidth="120.0" text="Имя" />
+                        <TableColumn fx:id="surnameColumn" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Фамилия" />
+                  <TableColumn fx:id="patronymicColumn" prefWidth="120.0" text="Отчество" />
+                  <TableColumn fx:id="loginColumn" prefWidth="120.0" text="Логин" />
+                  <TableColumn fx:id="passwordColumn" prefWidth="120.0" text="Пароль" />
                     </columns>
                 </TableView>
             </children>
         </HBox>
-        <HBox prefHeight="150.0" prefWidth="575.0">
+        <HBox prefHeight="150.0" prefWidth="600.0">
             <children>
                 <Button fx:id="btnAddTeachers" defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#tableTeachersButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Добавить">
                     <HBox.margin>
-                        <Insets left="235.0" right="15.0" top="40.0" />
+                        <Insets left="164.0" right="15.0" top="40.0" />
                     </HBox.margin>
                 </Button>
                 <Button fx:id="btnDeleteTeachers" focusTraversable="false" mnemonicParsing="false" onAction="#tableTeachersButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Удалить">

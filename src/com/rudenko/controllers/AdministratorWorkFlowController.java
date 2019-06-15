@@ -15,7 +15,6 @@ import java.io.IOException;
 
 public class AdministratorWorkflowController {
 
-
     //-------------------------------------------
     public void addData(ActionEvent actionEvent) throws IOException {
         Stage stage;
@@ -27,26 +26,72 @@ public class AdministratorWorkflowController {
             //----------------------------------------
             case "btnFaculties":
 
-                stage = makeModal("../fxml/FacultiesModal.fxml", "Таблица факультетов", 575,246,source);
+                stage = makeModal("../fxml/FacultiesModal.fxml", "Таблица факультетов", 575
+                        ,246,source);
                 stage.showAndWait();
                 break;
             //----------------------------------------
 
             case "btnDepartments":
-                stage = makeModal("../fxml/DepartmentsModal.fxml","Кафедральная таблица",575,246,source);
+                stage = makeModal("../fxml/DepartmentsModal.fxml","Кафедральная таблица",500,246,source);
                 stage.showAndWait();
                 break;
 
             case "btnTeachers":
-                stage = makeModal("../fxml/TeachersModal.fxml","Таблица преподавателей",750,246,source);
+                stage = makeModal("../fxml/TeachersModal.fxml","Таблица преподавателей",600,246,source);
+                stage.showAndWait();
+                break;
+
+            case "btnAdministrators":
+                stage = makeModal("../fxml/AdministratorsModal.fxml","Таблица администраторов",500,246,source);
+                stage.showAndWait();
+                break;
+
+            case "btnGroups":
+                stage = makeModal("../fxml/GroupsModal.fxml","Таблица групп",500,246,source);
+                stage.showAndWait();
+                break;
+
+            case "btnSubjects":
+                stage = makeModal("../fxml/SubjectsModal.fxml","Таблица предметов",575,246,source);
+                stage.showAndWait();
+                break;
+
+            case "btnTeachersPlusDepartments":
+                stage = makeModal("../fxml/TeachersPlusDepartmentsModal.fxml","Таблица преподавателей и кафедр",600,246,source);
+                stage.showAndWait();
+                break;
+
+            case "btnGroupsPlusDepartments":
+                stage = makeModal("../fxml/GroupsPlusDepartmentsModal.fxml","Таблица групп и кафедр",500,246,source);
+                stage.showAndWait();
+                break;
+
+            case "btnSubjectsPlusDepartments":
+                stage = makeModal("../fxml/SubjectsPlusDepartmentsModal.fxml","Таблица предметов и кафедр",500,246,source);
+                stage.showAndWait();
+                break;
+
+            case "btnLoad":
+                stage = makeModal("../fxml/LoadModal.fxml","Таблица нагрузки",575,246,source);
                 stage.showAndWait();
                 break;
 
             case "btnExit":
-                //------
-                stage  = (Stage) ((Node) source).getScene().getWindow();
-                if(BaseConnector.getInstance() != null) BaseConnector.getInstance().closeConnection();
-                stage.close();
+
+                Stage stageHelper = new Stage();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("../fxml/ServerAccess.fxml"));
+                Parent root = loader.load();
+                stageHelper.setTitle("Вход");
+                Scene scene = new Scene(root,452,284);
+                stageHelper.setScene(scene);
+                stageHelper.setResizable(false);
+                stageHelper.show();
+                //-------------------------------------------
+                Stage accessStage  = (Stage) ((Button) source).getScene().getWindow();
+                BaseConnector.getInstance().closeConnection();
+                accessStage.close();
                 break;
         }
     }
@@ -55,7 +100,8 @@ public class AdministratorWorkflowController {
 
     // Обработка клика по кнопки закрытия на заголовке окна
     private javafx.event.EventHandler<WindowEvent> closeEventHandler = event -> {
-        if(BaseConnector.getInstance() != null) BaseConnector.getInstance().closeConnection();
+        if(BaseConnector.getInstance() != null)
+            BaseConnector.getInstance().closeConnection();
     };
 
     public javafx.event.EventHandler<WindowEvent> getCloseEventHandler(){

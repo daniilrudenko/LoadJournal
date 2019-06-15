@@ -1,77 +1,81 @@
 package com.rudenko.controllers;
 
 import com.rudenko.models.DatabaseQueries;
-import com.rudenko.models.ControlsOpportunitiesImprover;
 import com.rudenko.views.MessageDialogMaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
 
-public class DepartmentsModalAddDataController {
+public class GroupsPlusDepartmentsModalAddDataController {
 
-    @FXML
-    public TextField facultiesModalAddTextField;
 
     @FXML
-    public ComboBox<String> departmentsModalAddCombobox;
-
+    public ComboBox<String> departmentsCombo;
     @FXML
-    public Button departmentsModalAddButtonOkay;
+    public ComboBox<String> groupsCombo;
 
-    @FXML
-    public Button departmentsModalAddButtonCancel;
+
 
     private MessageDialogMaker messageDialogMaker = null;
 
-    private DepartmentsModalController.DepartmentsData departmentsData;
+    private GroupsPlusDepartmentsModalController.GroupsPlusDepartmentsData data;
 
-    private ObservableList<String> observableList;
+    private ObservableList<String> observableListGroups;
+
+    private ObservableList<String> observableListDepartments;
 
     private DatabaseQueries databaseQueries;
 
     private ResultSet resultSet;
 
-
-
-
-    public DepartmentsModalController.DepartmentsData getDepartmentsData(){
-        return departmentsData;
+    public GroupsPlusDepartmentsModalController.GroupsPlusDepartmentsData getData(){
+        return data;
     }
+
 
     public void initialize(){
 
-        observableList =FXCollections.observableArrayList();
+        observableListDepartments = FXCollections.observableArrayList();
+        observableListGroups = FXCollections.observableArrayList();
         databaseQueries = new DatabaseQueries();
-        resultSet = databaseQueries.getData("faculties");
+        resultSet = databaseQueries.getData("groups");
         while (true) {
             try {
                 if (!resultSet.next()) break;
-                observableList.add(resultSet.getString(2));
+                observableListGroups.add(resultSet.getString(2));
             } catch (SQLException e) {
                 System.out.println("Ошибка при считывании данных: ");
                 e.printStackTrace();
             }
         }
-        departmentsModalAddCombobox.setItems(observableList);
+
+        resultSet = databaseQueries.getData("departments");
+        while (true) {
+            try {
+                if (!resultSet.next()) break;
+                observableListDepartments.add(resultSet.getString(3));
+            } catch (SQLException e) {
+                System.out.println("Ошибка при считывании данных - ");
+                e.printStackTrace();
+            }
+        }
+        groupsCombo.setItems(observableListGroups);
+        departmentsCombo.setItems(observableListDepartments);
+
+
 
 
     }
 
 
-    @FXML
     public void onButtonPressed(ActionEvent actionEvent) {
 
         Object source = actionEvent.getSource();
@@ -84,12 +88,11 @@ public class DepartmentsModalAddDataController {
 
         switch (clickedButton.getId()){
 
-            case "departmentsModalAddButtonOkay":
+            case "groupsTeachersModalAddButtonOkay":
 
-                String result = ControlsOpportunitiesImprover.textFieldIsEmpty(facultiesModalAddTextField);
 
-                if(result.equals(ControlsOpportunitiesImprover.TRUE)
-                        || departmentsModalAddCombobox.getSelectionModel().isEmpty()) {
+
+                if( departmentsCombo.getSelectionModel().isEmpty() || groupsCombo.getSelectionModel().isEmpty()) {
                     messageDialogMaker = new MessageDialogMaker(
                             "Внимание", null,
                             "Пожалуйста, заполните все данные.", Alert.AlertType.WARNING);
@@ -97,18 +100,18 @@ public class DepartmentsModalAddDataController {
                     break;
                 }
                 else {
-                    departmentsData = new DepartmentsModalController.DepartmentsData();
-
-                    departmentsData.setName(facultiesModalAddTextField.getText());
-                    departmentsData.setFacultyName(departmentsModalAddCombobox.getValue());
+                    data = new GroupsPlusDepartmentsModalController.GroupsPlusDepartmentsData();
+                    data.setDepartments(departmentsCombo.getValue());
+                    data.setGroups(groupsCombo.getValue());
                     Stage stage = (Stage) ((Button) source).getScene().getWindow();
                     stage.close();
                     break;
                 }
-            case "departmentsModalAddButtonCancel":
+            case "groupsTeachersModalAddButtonCancel":
                 Stage stage = (Stage) ((Button) source).getScene().getWindow();
                 stage.close();
                 break;
         }
+
     }
 }

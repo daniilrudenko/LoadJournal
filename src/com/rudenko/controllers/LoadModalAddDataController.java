@@ -1,64 +1,60 @@
 package com.rudenko.controllers;
 
 import com.rudenko.models.ControlsOpportunitiesImprover;
-import com.rudenko.views.LimitedTextField;
 import com.rudenko.views.MessageDialogMaker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class FacultiesModalAddDataController {
-
-
-    @FXML
-    private LimitedTextField facultiesModalAddTextField;
+public class LoadModalAddDataController {
 
     @FXML
-    public Button facultiesModalAddButtonOkay;
+    public TextField loadModalAddTextField;
 
     @FXML
-    public Button facultiesModalAddButtonCancel;
+    public Button loadModalAddButtonOkay;
+
+    @FXML
+    public Button loadModalAddButtonCancel;
+
+    private LoadModalController.LoadData loadData;
+    //--------------------------------------------------
 
     //--------------------------------------------------
 
-    private FacultiesModalController.FacultiesData facultiesData;
-    //--------------------------------------------------
-
-    public void initialize(){
-        facultiesModalAddTextField.setMaxLength(60);
+    public LoadModalController.LoadData getData() {
+        return loadData;
     }
-    //--------------------------------------------------
 
-    public FacultiesModalController.FacultiesData getFacultiesData(){
-        return facultiesData;
-    }
-    //--------------------------------------------------
 
+    @FXML
     public void onButtonPressed(ActionEvent actionEvent) {
 
         MessageDialogMaker messageDialogMaker;
 
         Object source = actionEvent.getSource();
 
-        if(!(source instanceof Button)){ return; }
+        if (!(source instanceof Button)) {
+            return;
+        }
 
         Button clickedButton = (Button) source;
 
-        switch (clickedButton.getId()){
-            case "facultiesModalAddButtonOkay":
-                String result = ControlsOpportunitiesImprover.textFieldIsEmpty(facultiesModalAddTextField);
+        switch (clickedButton.getId()) {
+            case "loadModalAddButtonOkay":
+                String result = ControlsOpportunitiesImprover.textFieldIsEmpty(loadModalAddTextField);
 
-                if(result.equals(ControlsOpportunitiesImprover.TRUE)) {
+                if (result.equals(ControlsOpportunitiesImprover.TRUE)) {
                     messageDialogMaker = new MessageDialogMaker(
                             "Внимание", null,
                             "Пожалуйста, заполните пустое поле", Alert.AlertType.WARNING);
                     messageDialogMaker.show();
                     return;
-                }
-                else {
-                    facultiesData = new FacultiesModalController.FacultiesData(facultiesModalAddTextField.getText());
+                } else {
+                    loadData = new LoadModalController.LoadData(loadModalAddTextField.getText());
                     Stage stage = (Stage) ((Button) source).getScene().getWindow();
                     stage.close();
                     break;

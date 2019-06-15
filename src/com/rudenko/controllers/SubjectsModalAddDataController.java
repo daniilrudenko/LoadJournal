@@ -9,35 +9,35 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-public class FacultiesModalAddDataController {
-
-
-    @FXML
-    private LimitedTextField facultiesModalAddTextField;
+public class SubjectsModalAddDataController {
 
     @FXML
-    public Button facultiesModalAddButtonOkay;
+    public LimitedTextField subjectsModalAddTextField;
 
     @FXML
-    public Button facultiesModalAddButtonCancel;
+    public Button subjectsModalAddButtonOkay;
 
-    //--------------------------------------------------
+    @FXML
+    public Button subjectsModalAddButtonCancel;
 
-    private FacultiesModalController.FacultiesData facultiesData;
+
+    private SubjectsModalController.SubjectsData subjectsData;
     //--------------------------------------------------
 
     public void initialize(){
-        facultiesModalAddTextField.setMaxLength(60);
+        subjectsModalAddTextField.setMaxLength(60);
     }
     //--------------------------------------------------
 
-    public FacultiesModalController.FacultiesData getFacultiesData(){
-        return facultiesData;
+    public SubjectsModalController.SubjectsData getSubjectsData(){
+        return subjectsData;
     }
-    //--------------------------------------------------
 
+
+
+
+    @FXML
     public void onButtonPressed(ActionEvent actionEvent) {
-
         MessageDialogMaker messageDialogMaker;
 
         Object source = actionEvent.getSource();
@@ -47,8 +47,8 @@ public class FacultiesModalAddDataController {
         Button clickedButton = (Button) source;
 
         switch (clickedButton.getId()){
-            case "facultiesModalAddButtonOkay":
-                String result = ControlsOpportunitiesImprover.textFieldIsEmpty(facultiesModalAddTextField);
+            case "subjectsModalAddButtonOkay":
+                String result = ControlsOpportunitiesImprover.textFieldIsEmpty(subjectsModalAddTextField);
 
                 if(result.equals(ControlsOpportunitiesImprover.TRUE)) {
                     messageDialogMaker = new MessageDialogMaker(
@@ -58,12 +58,12 @@ public class FacultiesModalAddDataController {
                     return;
                 }
                 else {
-                    facultiesData = new FacultiesModalController.FacultiesData(facultiesModalAddTextField.getText());
+                    subjectsData = new SubjectsModalController.SubjectsData(subjectsModalAddTextField.getText());
                     Stage stage = (Stage) ((Button) source).getScene().getWindow();
                     stage.close();
                     break;
                 }
-            case "facultiesModalAddButtonCancel":
+            case "subjectsModalAddButtonCancel":
                 Stage stage = (Stage) ((Button) source).getScene().getWindow();
                 stage.close();
                 break;
