@@ -56,7 +56,6 @@ public class GroupsPlusDepartmentsModalAddDataController {
                 e.printStackTrace();
             }
         }
-
         resultSet = databaseQueries.getData("departments");
         while (true) {
             try {

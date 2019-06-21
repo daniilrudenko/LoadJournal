@@ -3,6 +3,7 @@ package com.rudenko.controllers;
 import com.rudenko.models.ControlsOpportunitiesImprover;
 import com.rudenko.views.LimitedTextField;
 import com.rudenko.views.MessageDialogMaker;
+import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -15,11 +16,6 @@ public class FacultiesModalAddDataController {
     @FXML
     private LimitedTextField facultiesModalAddTextField;
 
-    @FXML
-    public Button facultiesModalAddButtonOkay;
-
-    @FXML
-    public Button facultiesModalAddButtonCancel;
 
     //--------------------------------------------------
 

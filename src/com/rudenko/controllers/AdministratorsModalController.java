@@ -14,7 +14,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,7 +45,6 @@ public class AdministratorsModalController {
     private ResultSet resultSet;
     private AdministratorsModalAddDataController administratorsModalAddDataController;
     private AdministratorsData selectedItem;
-
     private AdministratorsData administratorsData;
 
 
@@ -143,9 +141,9 @@ public class AdministratorsModalController {
 
     public static class AdministratorsData {
 
-        public String login;
+        private String login;
 
-        public String password;
+        private String password;
 
         public AdministratorsData(){
 

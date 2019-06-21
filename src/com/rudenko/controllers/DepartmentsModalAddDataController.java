@@ -2,37 +2,26 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.DatabaseQueries;
 import com.rudenko.models.ControlsOpportunitiesImprover;
+import com.rudenko.views.LimitedTextField;
 import com.rudenko.views.MessageDialogMaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class DepartmentsModalAddDataController {
 
     @FXML
-    public TextField facultiesModalAddTextField;
+    public LimitedTextField facultiesModalAddTextField;
 
     @FXML
     public ComboBox<String> departmentsModalAddCombobox;
-
-    @FXML
-    public Button departmentsModalAddButtonOkay;
-
-    @FXML
-    public Button departmentsModalAddButtonCancel;
 
     private MessageDialogMaker messageDialogMaker = null;
 
@@ -52,7 +41,7 @@ public class DepartmentsModalAddDataController {
     }
 
     public void initialize(){
-
+        facultiesModalAddTextField.setMaxLength(60);
         observableList =FXCollections.observableArrayList();
         databaseQueries = new DatabaseQueries();
         resultSet = databaseQueries.getData("faculties");

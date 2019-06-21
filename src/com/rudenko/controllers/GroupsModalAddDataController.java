@@ -2,6 +2,7 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.ControlsOpportunitiesImprover;
 import com.rudenko.views.MessageDialogMaker;
+import com.rudenko.views.SpacesBannedTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,28 +10,20 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class GroupsModalAddDataController {
 
     @FXML
-    public TextField groupsModalNameTextField;
+    public SpacesBannedTextField groupsModalNameTextField;
 
     @FXML
-    public TextField groupsModalFlowTextField;
+    public SpacesBannedTextField groupsModalFlowTextField;
 
     @FXML
-    public TextField groupsModalYearTextField;
+    public SpacesBannedTextField groupsModalYearTextField;
 
-    @FXML
-    public Button groupsModalAddButtonOkay;
-
-    @FXML
-    public Button groupsModalAddButtonCancel;
 
     @FXML
     public ComboBox<String> groupsComboBoxForm;
@@ -48,6 +41,9 @@ public class GroupsModalAddDataController {
 
 
     public void initialize(){
+        groupsModalFlowTextField.setMaxLength(60);
+        groupsModalNameTextField.setMaxLength(60);
+        groupsModalYearTextField.setMaxLength(60);
         list.add("Очно-заочная");
         list.add("Очная");
         list.add("Заочная");
@@ -76,6 +72,7 @@ public class GroupsModalAddDataController {
                             "Внимание", null,
                             "Пожалуйста, заполните все данные.", Alert.AlertType.WARNING);
                     messageDialogMaker.show();
+                    break;
                 } else {
                     groupsData = new GroupsModalController.GroupsData();
                     groupsData.setName(groupsModalNameTextField.getText());
@@ -84,6 +81,7 @@ public class GroupsModalAddDataController {
                     groupsData.setYear(groupsModalYearTextField.getText());
                     Stage stage = (Stage) ((Button) source).getScene().getWindow();
                     stage.close();
+                    break;
                 }
             case "groupsModalAddButtonCancel":
                 Stage stage = (Stage) ((Button) source).getScene().getWindow();

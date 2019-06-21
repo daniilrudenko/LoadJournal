@@ -1,41 +1,44 @@
 package com.rudenko.controllers;
 
-import com.rudenko.models.DatabaseQueries;
 import com.rudenko.models.ControlsOpportunitiesImprover;
 import com.rudenko.views.MessageDialogMaker;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.sql.ResultSet;
 
 public class TeachersModalAddDataController {
 
 
-    @FXML
-    public TextField teachersModalNameTextField;
+
 
     @FXML
-    public TextField teachersModalSurnameTextField;
+    public SpacesBannedTextField teachersModalNameTextField;
 
     @FXML
-    public TextField teachersModalPatronymicTextField;
+    public SpacesBannedTextField teachersModalSurnameTextField;
 
     @FXML
-    public TextField teachersModalLoginTextField;
+    public SpacesBannedTextField teachersModalPatronymicTextField;
 
     @FXML
-    public TextField teachersModalPasswordTextField;
+    public SpacesBannedTextField teachersModalLoginTextField;
 
     @FXML
-    public Button teachersModalAddButtonOkay;
+    public SpacesBannedTextField teachersModalPasswordTextField;
 
-    @FXML
-    public Button teachersModalAddButtonCancel;
+
+
+    public void initialize(){
+        teachersModalNameTextField.setMaxLength(60);
+        teachersModalSurnameTextField.setMaxLength(60);
+        teachersModalPatronymicTextField.setMaxLength(60);
+        teachersModalLoginTextField.setMaxLength(60);
+        teachersModalPasswordTextField.setMaxLength(60);
+
+    }
 
 
 
@@ -76,6 +79,7 @@ public class TeachersModalAddDataController {
                             "Внимание", null,
                             "Пожалуйста, заполните все данные.", Alert.AlertType.WARNING);
                     messageDialogMaker.show();
+                    break;
                 } else {
                     teachersData = new TeachersModalController.TeachersData();
                     teachersData.setName(teachersModalNameTextField.getText());

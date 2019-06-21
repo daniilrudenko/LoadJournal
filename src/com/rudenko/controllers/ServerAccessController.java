@@ -127,7 +127,6 @@ public class ServerAccessController  {
             if(!databaseFlag) {
                 databaseQueries.createTable("faculties",QueriesData.CREATE_FACULTIES);
                 databaseQueries.createTable("departments",QueriesData.CREATE_DEPARTMENTS);
-                databaseQueries.createTable("faculties",QueriesData.CREATE_FACULTIES);
                 databaseQueries.createTable("teachers",QueriesData.CREATE_TEACHERS);
                 databaseQueries.createTable("administrators",QueriesData.CREATE_ADMINISTRATORS);
                 databaseQueries.createTable("teachers_plus_departments",QueriesData.CREATE_TEACHERS_PLUS_DEPARTMENTS);
@@ -135,9 +134,8 @@ public class ServerAccessController  {
                 databaseQueries.createTable("groups_plus_departments",QueriesData.CREATE_GROUPS_PLUS_DEPARTMENTS);
                 databaseQueries.createTable("subjects",QueriesData.CREATE_SUBJECTS);
                 databaseQueries.createTable("subjects_plus_departments",QueriesData.CREATE_SUBJECTS_PLUS_DEPARTMENTS);
-
                 databaseQueries.createTable("load",QueriesData.CREATE_LOAD);
-                databaseQueries.createTable("plan",QueriesData.CREATE_PLAN);
+                databaseQueries.createTable("timetable",QueriesData.CREATE_TIMETABLE);
                 fileWorkerDatabaseFlag.createFile();
             }
             messageDialogMaker.show();

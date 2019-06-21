@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.CreateTimeTableController">
+   <children>
+      <HBox prefHeight="250.0" prefWidth="1200.0">
+         <children>
+            <TableView fx:id="timetable" focusTraversable="false" prefHeight="500.0" prefWidth="1200.0">
+              <columns>
+                <TableColumn fx:id="columnDepartment" prefWidth="133.0" text="Кафедра" />
+                <TableColumn fx:id="columnTeacher" prefWidth="133.0" text="Преподаватель" />
+                  <TableColumn fx:id="columnGroup" prefWidth="133.0" text="Группа" />
+                  <TableColumn fx:id="columnSubject" prefWidth="133.0" text="Предмет" />
+                  <TableColumn fx:id="columnPlan" prefWidth="133.0" text="Тип плана" />
+                  <TableColumn fx:id="columnLoad" prefWidth="133.0" text="Вид нагрузки" />
+                  <TableColumn fx:id="columnDay" prefWidth="133.0" text="День" />
+                  <TableColumn fx:id="columnNumber" prefWidth="133.0" text="Номер пары" />
+                  <TableColumn fx:id="columnTypeOfWeek" prefWidth="133.0" text="Тип недели" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <HBox prefHeight="60.0" prefWidth="1200.0">
+         <children>
+            <Button fx:id="btnAdd" defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#ButtonPressed" prefWidth="100.0" text="Добавить">
+               <HBox.margin>
+                  <Insets left="430.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnDel" focusTraversable="false" mnemonicParsing="false" onAction="#ButtonPressed" prefWidth="100.0" text="Удалить">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnCancel" cancelButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#ButtonPressed" prefWidth="100.0" text="Отмена">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets top="40.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox prefHeight="50.0" prefWidth="1200.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

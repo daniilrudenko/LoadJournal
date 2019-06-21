@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.*?>
 
 
-<?import com.rudenko.views.SpacesBannedTextField?>
 <?import com.rudenko.views.LimitedTextField?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="117.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.SubjectsModalAddDataController">
     <children>

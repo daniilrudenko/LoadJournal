@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.rudenko.views.SpacesBannedTextField?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="404.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.TeachersModalAddDataController">
     <children>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -14,11 +15,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="teachersModalNameTextField" prefHeight="27.0" prefWidth="280.0">
+                <SpacesBannedTextField fx:id="teachersModalNameTextField" prefHeight="27.0" prefWidth="280.0">
                     <HBox.margin>
                         <Insets left="56.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
             <VBox.margin>
                 <Insets top="10.0" />
@@ -31,11 +32,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="teachersModalSurnameTextField" prefHeight="27.0" prefWidth="280.0">
+                <SpacesBannedTextField fx:id="teachersModalSurnameTextField" prefHeight="27.0" prefWidth="280.0">
                     <HBox.margin>
                         <Insets left="27.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
         </HBox>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -45,11 +46,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="teachersModalPatronymicTextField" prefHeight="27.0" prefWidth="280.0">
+                <SpacesBannedTextField fx:id="teachersModalPatronymicTextField" prefHeight="27.0" prefWidth="280.0">
                     <HBox.margin>
                         <Insets left="23.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
         </HBox>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -59,11 +60,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="teachersModalLoginTextField" prefHeight="27.0" prefWidth="280.0">
+                <SpacesBannedTextField fx:id="teachersModalLoginTextField" prefHeight="27.0" prefWidth="280.0">
                     <HBox.margin>
                         <Insets left="44.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
         </HBox>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -73,11 +74,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="teachersModalPasswordTextField" prefHeight="27.0" prefWidth="280.0">
+                <SpacesBannedTextField fx:id="teachersModalPasswordTextField" prefHeight="27.0" prefWidth="280.0">
                     <HBox.margin>
                         <Insets left="35.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
         </HBox>
         <HBox prefHeight="58.5" prefWidth="200.0">

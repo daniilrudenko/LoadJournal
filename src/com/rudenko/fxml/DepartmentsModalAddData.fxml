@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.rudenko.views.LimitedTextField?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="348.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.DepartmentsModalAddDataController">
     <children>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -28,11 +29,11 @@
                         <Insets left="17.0" top="23.25" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="facultiesModalAddTextField" prefHeight="27.0" prefWidth="218.0">
+                <LimitedTextField fx:id="facultiesModalAddTextField" prefHeight="27.0" prefWidth="218.0">
                     <HBox.margin>
                         <Insets left="20.0" top="18.0" />
                     </HBox.margin>
-                </TextField>
+                </LimitedTextField>
             </children>
         </HBox>
         <HBox prefHeight="58.5" prefWidth="200.0">

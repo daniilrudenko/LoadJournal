@@ -72,9 +72,17 @@ public class QueriesData {
             "name character varying (100)" +
             ")";
 
-    public static final String CREATE_PLAN = "create table if not exists plan(" +
+
+    public static final String CREATE_TIMETABLE = "create table if not exists timetable(" +
             "id serial primary key, " +
-            "name character varying (100)" +
+            "teachers_plus_departments_id integer references teachers_plus_departments(id) on delete cascade," +
+            "groups_plus_departments_id integer references groups_plus_departments(id) on delete cascade," +
+            "subjects_plus_departments_id integer references subjects_plus_departments(id) on delete cascade," +
+            "load_id integer references load(id) on delete cascade," +
+            "plan character varying (100)," +
+            "day character varying (100)," +
+            "number character varying (100)," +
+            "Type_of_week character varying (100)" +
             ")";
 
 

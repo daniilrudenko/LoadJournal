@@ -1,9 +1,6 @@
 package com.rudenko.start;
 
 import com.rudenko.controllers.ServerAccessController;
-import com.rudenko.models.BaseConnector;
-import com.rudenko.models.DatabaseQueries;
-import com.rudenko.models.QueriesData;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +29,11 @@ public class Main extends Application {
             ServerAccessController controller = loader.getController();
             primaryStage.setOnCloseRequest(controller.getCloseEventHandler());
 
-        }
+
+
+        
+
+    }
 
     public static void main(String[] args) {
         launch(args);

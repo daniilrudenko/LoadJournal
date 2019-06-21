@@ -5,6 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import com.rudenko.views.SpacesBannedTextField?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="307.0" prefWidth="354.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.GroupsModalAddDataController">
     <children>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -28,11 +29,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="groupsModalYearTextField" prefHeight="27.0" prefWidth="184.0">
+                <SpacesBannedTextField fx:id="groupsModalYearTextField" prefHeight="27.0" prefWidth="184.0">
                     <HBox.margin>
                         <Insets left="17.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
         </HBox>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -42,11 +43,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="groupsModalFlowTextField" prefHeight="27.0" prefWidth="184.0">
+                <SpacesBannedTextField fx:id="groupsModalFlowTextField" prefHeight="27.0" prefWidth="184.0">
                     <HBox.margin>
                         <Insets left="87.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
         </HBox>
         <HBox prefHeight="50.0" prefWidth="200.0">
@@ -56,11 +57,11 @@
                         <Insets left="17.0" top="25.0" />
                     </HBox.margin>
                 </Label>
-                <TextField fx:id="groupsModalNameTextField" prefHeight="27.0" prefWidth="184.0">
+                <SpacesBannedTextField fx:id="groupsModalNameTextField" prefHeight="27.0" prefWidth="184.0">
                     <HBox.margin>
                         <Insets left="64.0" top="20.0" />
                     </HBox.margin>
-                </TextField>
+                </SpacesBannedTextField>
             </children>
             <VBox.margin>
                 <Insets />

@@ -1,9 +1,5 @@
 package com.rudenko.models;
 
-import com.rudenko.controllers.ServerAccessController;
-import sun.tools.jconsole.Tab;
-
-import javax.xml.transform.Result;
 import java.sql.*;
 import java.util.*;
 
@@ -17,7 +13,7 @@ public class DatabaseQueries {
 
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
-    //-----------------------------------Создание базы данных, удаление-------------------------------------------------
+    //---------------------------------------Создание базы данных-------------------------------------------------------
 
 
     // Создание базы данных
@@ -39,31 +35,6 @@ public class DatabaseQueries {
             try {
                 statement.executeUpdate("create database " + databaseName);
                 System.out.println("База данных " + "\"" + databaseName + "\" " + "создана.");
-            } catch (SQLException e) {
-                System.out.println("Не удалось выполнить запрос");
-                e.printStackTrace();
-            }
-        }
-    }
-
-    //------------------------------------------------------------------------------------------------
-    public void deleteDatabase(String databaseName) {
-
-
-        if (!BaseConnector.getInstance().doesConnectionExist()) {
-            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
-        } else {
-            if (statement == null) {
-                try {
-                    statement = BaseConnector.getInstance().getConnection().createStatement();
-                } catch (SQLException e) {
-                    System.out.println("Не удалось создать запрос: ");
-                    e.printStackTrace();
-                }
-            }
-            try {
-                statement.executeUpdate("drop database " + databaseName);
-                System.out.println("База данных " + "\"" + databaseName + "\" " + "удалена.");
             } catch (SQLException e) {
                 System.out.println("Не удалось выполнить запрос");
                 e.printStackTrace();
@@ -158,6 +129,24 @@ public class DatabaseQueries {
     }
 
 
+    public void delTimeTable(String value_teacher, String value_day,  String value) throws SQLException {
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+
+
+            }
+            statement.executeUpdate("delete from timetable where timetable.teachers_plus_departments_id = \'" + value_teacher +  "\'" + " and timetable.day = \'"  + value_day + "\'" +" and number = \'"  + value + "\'");
+
+        }
+    }
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     //-------------------------------------------Вставка в таблицы------------------------------------------------------
@@ -231,7 +220,9 @@ public class DatabaseQueries {
                 }
             }
             try {
-                resultSet = statement.executeQuery("select faculties.name, departments.name from departments inner join faculties on departments.faculties_id = faculties.id");
+                resultSet = statement.executeQuery(  "select faculties.name, departments.name from departments " +
+                                                          "inner join faculties on " +
+                                                          "departments.faculties_id = faculties.id");
                 System.out.println("Данные из таблицы departments" + " получены");
             } catch (SQLException e) {
                 System.out.println("Не удалось получить данные из таблицы: ");
@@ -240,6 +231,134 @@ public class DatabaseQueries {
         }
         return resultSet;
     }
+
+
+
+
+    public ResultSet getDataFromTimeTable() {
+
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                resultSet = statement.executeQuery("SELECT timetable.teachers_plus_departments_id, timetable.groups_plus_departments_id, " +
+                        "timetable.subjects_plus_departments_id, " +
+                        "timetable.load_id, \n" +
+                        "timetable.plan,timetable.day,timetable.number,timetable.Type_of_week " +
+                        "FROM timetable inner JOIN load on timetable.load_id = load.id");
+
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
+
+
+    public ResultSet getDataByIdFromSubjectsPlDep(String a) {
+
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                resultSet = statement.executeQuery("SELECT departments.name, subjects.name FROM subjects " +
+                        " LEFT JOIN subjects_plus_departments spd ON (subjects.id = spd.subjects_id)" +
+                        " LEFT JOIN departments ON (departments.id = spd.departments_id)" +
+                        " WHERE spd.id =" + " " + a);
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
+
+
+    public ResultSet getDataByIdFromTeachersPlDep(String a) {
+
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                resultSet = statement.executeQuery("SELECT departments.name, teachers.surname, teachers.login FROM teachers " +
+                        " LEFT JOIN teachers_plus_departments tpd ON (teachers.id = tpd.teachers_id)" +
+                        " LEFT JOIN departments ON (departments.id = tpd.departments_id)" +
+                        " WHERE tpd.id =" + " " + a);
+
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
+
+
+
+    public ResultSet getDataByIdFromGroupsPlDep(String a) {
+
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                resultSet = statement.executeQuery("SELECT departments.name, groups.name  FROM groups " +
+                        " LEFT JOIN groups_plus_departments gpd ON (groups.id = gpd.groups_id)" +
+                        " LEFT JOIN departments ON (departments.id = gpd.departments_id)" +
+                        " WHERE gpd.id =" + " " + a);
+
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
+
 
 
     public ResultSet getDataFromTeachersPlusDepartments() {
@@ -259,9 +378,9 @@ public class DatabaseQueries {
             }
             try {
                 resultSet = statement.executeQuery("SELECT departments.name, teachers.surname, teachers.login  FROM teachers  \n" +
-                                "LEFT JOIN teachers_plus_departments tpd ON (teachers.id = tpd.teachers_id) \n" +
-                                "LEFT JOIN departments  ON (departments.id = tpd.departments_id)\n" +
-                                "WHERE departments.id = departments_id");
+                                                         "LEFT JOIN teachers_plus_departments tpd ON (teachers.id = tpd.teachers_id) \n" +
+                                                         "LEFT JOIN departments  ON (departments.id = tpd.departments_id)\n" +
+                                                         "WHERE departments.id = departments_id");
                 System.out.println("Данные из таблицы teachers_plus_departments" + " получены");
             } catch (SQLException e) {
                 System.out.println("Не удалось получить данные из таблицы: ");
@@ -270,6 +389,9 @@ public class DatabaseQueries {
         }
         return resultSet;
     }
+
+
+
 
 
     public ResultSet getDataFromGroupsPlusDepartments() {
@@ -302,6 +424,8 @@ public class DatabaseQueries {
     }
 
 
+
+
     public ResultSet getDataFromSubjectsPlusDepartments() {
 
 
@@ -330,6 +454,41 @@ public class DatabaseQueries {
         }
         return resultSet;
     }
+
+
+
+    public ResultSet getDataFromMainTable(){
+
+        if (!BaseConnector.getInstance().doesConnectionExist()) {
+            System.out.println("Соеденение с сервером бд отсутствует\nСначала создайте соеденение.");
+        } else {
+            if (statement == null) {
+                try {
+                    statement = BaseConnector.getInstance().getConnection().createStatement();
+
+                } catch (SQLException e) {
+                    System.out.println("Не удалось создать запрос: ");
+                    e.printStackTrace();
+                }
+            }
+            try {
+                resultSet = statement.executeQuery("SELECT timetable.teachers_plus_departments_id, timetable.groups_plus_departments_id, " +
+                        "timetable.subjects_plus_departments_id, " +
+                        "timetable.load_id, " +
+                        "timetable.plan,timetable.day,timetable.number,timetable.Type_of_week " +
+                        "FROM timetable inner JOIN load on timetable.load_id = load.id");
+
+            } catch (SQLException e) {
+                System.out.println("Не удалось получить данные из таблицы: ");
+                e.printStackTrace();
+            }
+        }
+        return resultSet;
+    }
+
+
+
+
 
 
 
@@ -420,6 +579,9 @@ public class DatabaseQueries {
         }
         return res;
     }
+
+
+
     //------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------
     //----------------------------------Добавление удаление пользователей-----------------------------------------------

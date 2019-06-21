@@ -5,22 +5,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="575.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.FacultiesModalController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="246.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.rudenko.controllers.FacultiesModalController">
     <children>
-        <HBox prefHeight="200.0" prefWidth="575.0">
+        <HBox prefHeight="200.0" prefWidth="400.0">
             <children>
-                <TableView fx:id="tableFaculties" focusTraversable="false" prefHeight="150.0" prefWidth="575.0">
+                <TableView fx:id="tableFaculties" focusTraversable="false" prefHeight="150.0" prefWidth="400.0">
                     <columns>
-                        <TableColumn fx:id="tableFacultiesColumnName" editable="false" prefWidth="575.0" resizable="false" sortable="false" text="Название" />
+                        <TableColumn fx:id="tableFacultiesColumnName" editable="false" prefWidth="400.0" resizable="false" sortable="false" text="Название" />
                     </columns>
                 </TableView>
             </children>
         </HBox>
-        <HBox prefHeight="150.0" prefWidth="575.0">
+        <HBox prefHeight="150.0" prefWidth="400.0">
             <children>
                 <Button fx:id="btnAddFaculties" defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#tableFacultiesButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Добавить">
                     <HBox.margin>
-                        <Insets left="147.0" right="15.0" top="40.0" />
+                        <Insets left="65.0" right="15.0" top="40.0" />
                     </HBox.margin>
                 </Button>
                 <Button fx:id="btnDeleteFaculties" focusTraversable="false" mnemonicParsing="false" onAction="#tableFacultiesButtonPressed" prefHeight="27.0" prefWidth="81.0" text="Удалить">

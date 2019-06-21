@@ -2,23 +2,23 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.ControlsOpportunitiesImprover;
 import com.rudenko.views.MessageDialogMaker;
+import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class LoadModalAddDataController {
 
     @FXML
-    public TextField loadModalAddTextField;
+    public SpacesBannedTextField loadModalAddTextField;
 
-    @FXML
-    public Button loadModalAddButtonOkay;
 
-    @FXML
-    public Button loadModalAddButtonCancel;
+    public void initialize(){
+        loadModalAddTextField.setMaxLength(60);
+    }
+
 
     private LoadModalController.LoadData loadData;
     //--------------------------------------------------
@@ -59,7 +59,7 @@ public class LoadModalAddDataController {
                     stage.close();
                     break;
                 }
-            case "facultiesModalAddButtonCancel":
+            case "loadModalAddButtonCancel":
                 Stage stage = (Stage) ((Button) source).getScene().getWindow();
                 stage.close();
                 break;

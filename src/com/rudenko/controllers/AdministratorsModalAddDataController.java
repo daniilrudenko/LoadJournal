@@ -2,35 +2,33 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.ControlsOpportunitiesImprover;
 import com.rudenko.views.MessageDialogMaker;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.rudenko.views.SpacesBannedTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class AdministratorsModalAddDataController {
 
 
 
-    @FXML
-    public Button administratorsModalAddButtonOkay;
+
 
     @FXML
-    public Button administratorsModalAddButtonCancel;
+    public SpacesBannedTextField administratorsModalAddLoginTextField;
 
     @FXML
-    public TextField administratorsModalAddLoginTextField;
+    public SpacesBannedTextField administratorsModalPasswordTextField;
 
-    @FXML
-    public TextField administratorsModalPasswordTextField;
+
+    public void initialize(){
+        administratorsModalAddLoginTextField.setMaxLength(60);
+        administratorsModalPasswordTextField.setMaxLength(60);
+    }
 
 
     //-------------------------------------------------
-
-    private MessageDialogMaker messageDialogMaker = null;
 
     private AdministratorsModalController.AdministratorsData administratorsData;
 
@@ -46,6 +44,8 @@ public class AdministratorsModalAddDataController {
 
 
     public void onButtonPressed(ActionEvent actionEvent) {
+
+        MessageDialogMaker messageDialogMaker = null;
 
         Object source = actionEvent.getSource();
 

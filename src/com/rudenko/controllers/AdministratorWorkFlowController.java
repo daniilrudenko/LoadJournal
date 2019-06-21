@@ -2,7 +2,6 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.BaseConnector;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,7 +25,7 @@ public class AdministratorWorkflowController {
             //----------------------------------------
             case "btnFaculties":
 
-                stage = makeModal("../fxml/FacultiesModal.fxml", "Таблица факультетов", 575
+                stage = makeModal("../fxml/FacultiesModal.fxml", "Таблица факультетов", 400
                         ,246,source);
                 stage.showAndWait();
                 break;
@@ -77,7 +76,13 @@ public class AdministratorWorkflowController {
                 stage.showAndWait();
                 break;
 
+            case "btnTimeTable":
+                stage = makeModal("../fxml/CreateTimeTable.fxml","Таблица нагрузки",1200,346,source);
+                stage.showAndWait();
+                break;
+
             case "btnExit":
+
 
                 Stage stageHelper = new Stage();
                 FXMLLoader loader = new FXMLLoader();
