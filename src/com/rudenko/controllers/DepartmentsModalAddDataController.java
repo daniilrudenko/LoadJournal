@@ -2,18 +2,21 @@ package com.rudenko.controllers;
 
 import com.rudenko.models.DatabaseQueries;
 import com.rudenko.models.ControlsOpportunitiesImprover;
+import com.rudenko.views.HideableItem;
 import com.rudenko.views.LimitedTextField;
 import com.rudenko.views.MessageDialogMaker;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DepartmentsModalAddDataController {
 
@@ -21,13 +24,13 @@ public class DepartmentsModalAddDataController {
     public LimitedTextField facultiesModalAddTextField;
 
     @FXML
-    public ComboBox<String> departmentsModalAddCombobox;
+    public ComboBox<HideableItem<String>> departmentsModalAddCombobox;
 
     private MessageDialogMaker messageDialogMaker = null;
 
     private DepartmentsModalController.DepartmentsData departmentsData;
 
-    private ObservableList<String> observableList;
+    private List<String> list;
 
     private DatabaseQueries databaseQueries;
 
@@ -42,20 +45,20 @@ public class DepartmentsModalAddDataController {
 
     public void initialize(){
         facultiesModalAddTextField.setMaxLength(60);
-        observableList =FXCollections.observableArrayList();
+        list = new ArrayList<>();
         databaseQueries = new DatabaseQueries();
         resultSet = databaseQueries.getData("faculties");
         while (true) {
             try {
                 if (!resultSet.next()) break;
-                observableList.add(resultSet.getString(2));
+                list.add(resultSet.getString(2));
             } catch (SQLException e) {
                 System.out.println("Ошибка при считывании данных: ");
                 e.printStackTrace();
             }
         }
-        departmentsModalAddCombobox.setItems(observableList);
-
+        departmentsModalAddCombobox.setEditable(true);
+       departmentsModalAddCombobox = HideableItem.createComboBoxWithAutoCompletionSupport(list);
 
     }
 
@@ -89,7 +92,7 @@ public class DepartmentsModalAddDataController {
                     departmentsData = new DepartmentsModalController.DepartmentsData();
 
                     departmentsData.setName(facultiesModalAddTextField.getText());
-                    departmentsData.setFacultyName(departmentsModalAddCombobox.getValue());
+                    departmentsData.setFacultyName(departmentsModalAddCombobox.getValue().toString());
                     Stage stage = (Stage) ((Button) source).getScene().getWindow();
                     stage.close();
                     break;
