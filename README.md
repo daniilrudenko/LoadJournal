@@ -1,3 +1,2 @@
-# loadjournal
-Application which helps teachers to automate filling journal of load. 
+# LoadJournal 
 JavaFX + PostgreSQL. 
